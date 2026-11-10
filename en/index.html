@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZeroLink by PUAS · Emergency communication app with no signal or internet</title>
+<meta name="description" content="ZeroLink: a free Android app for calls, walkie-talkie, chat, photos, offline maps and SOS between phones with no internet and no signal. For disasters, hiking and the outdoors.">
+<link rel="canonical" href="https://zerolink.web.id/en/">
+<link rel="alternate" hreflang="id" href="https://zerolink.web.id/">
+<link rel="alternate" hreflang="en" href="https://zerolink.web.id/en/">
+<link rel="alternate" hreflang="x-default" href="https://zerolink.web.id/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="PUAS">
+<!-- Google Search Console: tempel kode verifikasi di content, lalu hapus komentar ini. -->
+<!-- <meta name="google-site-verification" content=""> -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ZeroLink",
+  "alternateName": "SalingJaga",
+  "description": "Offline emergency communication app for Android: calls, walkie-talkie, chat, photos, video, offline maps, compass and SOS over Wi-Fi Direct with no internet and no signal.",
+  "url": "https://zerolink.web.id/en/",
+  "downloadUrl": "/zerolink.apk",
+  "image": "https://zerolink.web.id/og.jpg",
+  "screenshot": "https://saling-jaga.com/screenshots/2-grup-dan-chat.png",
+  "applicationCategory": "CommunicationApplication",
+  "operatingSystem": "Android 6.0+",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+  "author": { "@type": "Person", "name": "Chalid Ade Rahman", "url": "https://github.com/chalidade" }
+}
+</script>
+<meta property="og:title" content="ZeroLink">
+<meta property="og:description" content="Calls, walkie-talkie, chat and SOS between Android phones with no internet and no signal.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZeroLink">
+<meta property="og:url" content="https://zerolink.web.id/en/">
+<meta property="og:image" content="https://zerolink.web.id/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ZeroLink: stay in touch when the signal is gone">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZeroLink">
+<meta name="twitter:description" content="Calls, walkie-talkie, chat and SOS between Android phones with no internet and no signal.">
+<meta name="twitter:image" content="https://zerolink.web.id/og.jpg">
+<meta name="theme-color" content="#04201c">
+<link rel="icon" href="../brand/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<script>
+  // Statistik pengunjung ramah privasi (GoatCounter): tanpa cookie, tanpa data pribadi.
+  // Kosong = mati. Isi dengan kode akun, misal "salingjaga" untuk salingjaga.goatcounter.com.
+  var GOATCOUNTER = '';
+  if (GOATCOUNTER) {
+    var gc = document.createElement('script');
+    gc.async = true;
+    gc.src = 'https://gc.zgo.at/count.js';
+    gc.setAttribute('data-goatcounter', 'https://' + GOATCOUNTER + '.goatcounter.com/count');
+    document.head.appendChild(gc);
+  }
+  // Waitlist: empty = the buttons open an email. Set the /exec URL from tools/waitlist/Code.gs to use the form.
+  var WAITLIST_ENDPOINT = '';
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('daftar');
+    if (!WAITLIST_ENDPOINT || !form || !window.fetch) return;
+    form.hidden = false;
+    document.querySelectorAll('[data-waitlist]').forEach(function (a) {
+      a.href = '#daftar';
+      a.addEventListener('click', function () {
+        var box = form.querySelector('[name="' + a.getAttribute('data-waitlist') + '"]');
+        if (box) box.checked = true;
+      });
+    });
+    var status = form.querySelector('.status'), button = form.querySelector('button');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.nama.value.trim() || !form.kontak.value.trim()) { status.textContent = 'Please fill in your name and contact.'; return; }
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      fetch(WAITLIST_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(new FormData(form)) })
+        .then(function () { form.reset(); status.textContent = 'Thank you, you’re on the list. We’ll let you know when it’s ready.'; })
+        .catch(function () { status.textContent = 'Couldn’t send. Try again, or email info.salingjaga@gmail.com.'; })
+        .then(function () { button.disabled = false; });
+    });
+  });
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-nosignal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20v-2M9 20v-5M14 20v-8M19 20V7" opacity=".45"/><path d="m3 3 18 18"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22V3"/><path d="M5 4h13l-2.5 4.5L18 13H5"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.3 7.6L3 21l1.4-5.4A8.5 8.5 0 1 1 21 12z"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/><path d="M3.5 12H8l1.5-2.5 2.5 5 2-3.5h6.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v15H6.5A2.5 2.5 0 0 0 4 20.5 2.5 2.5 0 0 0 6.5 23H20"/><path d="M12 7v6M9 10h6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-userx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/><path d="m17 8 5 5M22 8l-5 5"/></symbol>
+  </defs>
+</svg>
+
+<div class="nav-shell">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="#top"><img src="../brand/mark.png" alt="" width="34" height="34"><span>ZeroLink <small style="font-weight:600;opacity:.7">by PUAS</small></span></a>
+      <div class="nav-links">
+        <a class="opt" href="#story">Story</a>
+        <a class="opt" href="#features">Features</a>
+        <a class="opt" href="#install">Install</a>
+        <a class="opt" href="#security">Security</a>
+        <a class="opt" href="laptop/">Laptop</a>
+        <div class="lang" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><span aria-current="page">EN</span></div>
+        <a class="btn btn-primary btn-sm" href="/zerolink.apk" data-goatcounter-click="unduh-apk-1" data-goatcounter-title="Download APK"><svg aria-hidden="true"><use href="#i-download"/></svg>Download</a>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="chip"><span class="dot"></span>No signal · 4 phones connected</span>
+      <h1>When the signal dies, we stay <span class="serif">connected.</span></h1>
+      <p class="lede">Talk, message, share your location and send SOS between Android phones, directly over Wi‑Fi Direct. No internet, no mobile credit, no cell towers.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/zerolink.apk" data-goatcounter-click="unduh-apk-2" data-goatcounter-title="Download APK"><svg aria-hidden="true"><use href="#i-download"/></svg>Download free APK</a>
+        <a class="btn btn-ghost" href="#video"><svg aria-hidden="true"><use href="#i-play"/></svg>Watch 32 seconds</a>
+      </div>
+      <ul class="checks">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>No account</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>No server</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>No ads</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>Android 6.0+</li>
+      </ul>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="rings"><i></i><i></i><i></i></div>
+      <svg class="links" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M18 16 Q34 30 50 50" vector-effect="non-scaling-stroke"/>
+        <path class="hot" d="M84 46 Q66 44 50 50" vector-effect="non-scaling-stroke"/>
+        <path d="M22 88 Q34 70 50 50" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <div class="phone"><img src="../screenshots/3-sos-masuk.png" alt="" width="1179" height="2556" fetchpriority="high"></div>
+      <span class="chip signal"><svg><use href="#i-nosignal"/></svg>0 bars</span>
+      <div class="peer p-budi"><span class="av">B</span><span><b>Budi</b><small>252 m · north</small></span></div>
+      <div class="peer p-sari sos"><span class="av">S</span><span><b>Sari</b><small>SOS · 259 m north-west</small></span></div>
+      <div class="peer p-rt"><span class="av">P</span><span><b>Pak RT</b><small>470 m · south-east</small></span></div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <ul>
+      <li>No internet</li><li>No mobile credit</li><li>No cell towers</li><li>Wi‑Fi Direct</li><li>AES‑256‑GCM encrypted</li><li>No account</li><li>Meshtastic LoRa gateway</li><li>English &amp; Bahasa Indonesia</li>
+      <li>No internet</li><li>No mobile credit</li><li>No cell towers</li><li>Wi‑Fi Direct</li><li>AES‑256‑GCM encrypted</li><li>No account</li><li>Meshtastic LoRa gateway</li><li>English &amp; Bahasa Indonesia</li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <section class="sec" id="story">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">One night, no signal</p>
+        <h2>This is what it feels like when <span class="serif">the towers go dark.</span></h2>
+      </div>
+      <div class="story">
+        <ol class="beats">
+          <li class="beat on">
+            <time>17:58</time>
+            <h3>The power cuts out. The bars disappear.</h3>
+            <p>The group chat goes quiet, but the phones are still on. Open ZeroLink, tap search, and the neighbours' phones show up within seconds, straight over Wi‑Fi Direct.</p>
+            <img class="shot" src="../screenshots/1-cari-perangkat.png" alt="List of nearby phones ready to connect" loading="lazy" width="1179" height="2556">
+          </li>
+          <li class="beat">
+            <time>18:01</time>
+            <h3>Budi holds the button, everyone hears.</h3>
+            <p>Walkie-talkie to the whole group, or chat when it is too loud to talk. Messages hop from phone to phone, with no server in between.</p>
+            <img class="shot" src="../screenshots/2-grup-dan-chat.png" alt="A group of four people, Budi is talking" loading="lazy" width="1179" height="2556">
+          </li>
+          <li class="beat">
+            <time>18:02</time>
+            <h3>Pak RT moves the meeting point.</h3>
+            <p>One announcement sits above every chat: Post 3, 250 m north-east. Every phone knows the direction and the distance.</p>
+            <img class="shot" src="../screenshots/23-titik-kumpul.png" alt="Meeting point announcement: Post 3, 250 m north-east" loading="lazy" width="1179" height="2556">
+          </li>
+          <li class="beat sos">
+            <time>18:04</time>
+            <h3>Sari sends an SOS.</h3>
+            <p>An alarm rings on every phone, with her distance, direction and battery: 259 m north-west, 21% left.</p>
+            <img class="shot" src="../screenshots/3-sos-masuk.png" alt="Incoming SOS from Sari, 259 m north-west" loading="lazy" width="1179" height="2556">
+          </li>
+          <li class="beat">
+            <time>18:20</time>
+            <h3>Whoever hasn't arrived, shows.</h3>
+            <p>The compass shows every member and the meeting point. Who is already there, and who is still on the way.</p>
+            <img class="shot" src="../screenshots/24-titik-kumpul-di-kompas.png" alt="Compass with member positions and the meeting point" loading="lazy" width="1179" height="2556">
+          </li>
+        </ol>
+        <div class="story-phone" aria-hidden="true">
+          <div class="phone">
+            <img class="on" src="../screenshots/1-cari-perangkat.png" alt="" loading="lazy">
+            <img src="../screenshots/2-grup-dan-chat.png" alt="" loading="lazy">
+            <img src="../screenshots/23-titik-kumpul.png" alt="" loading="lazy">
+            <img src="../screenshots/3-sos-masuk.png" alt="" loading="lazy">
+            <img src="../screenshots/24-titik-kumpul-di-kompas.png" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="features">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">Features</p>
+        <h2>Everything a group needs when <span class="serif">the signal is gone.</span></h2>
+      </div>
+      <div class="bento">
+        <div class="tile wide rise"><span class="ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><h3>Walkie-talkie &amp; calls</h3><p>Hold to talk to the whole group, or switch to a two-way call.</p></div>
+        <div class="tile wide red rise"><span class="ic"><svg aria-hidden="true"><use href="#i-alert"/></svg></span><h3>SOS with direction</h3><p>An alarm on every phone, with the distance and direction to the sender. Also by pressing a volume key 5×.</p></div>
+        <div class="tile rise"><span class="ic"><svg aria-hidden="true"><use href="#i-compass"/></svg></span><h3>Compass &amp; offline map</h3><p>A radar of every member, plus a big arrow to whoever needs help. Tap a name to be guided there, no internet needed.</p></div>
+        <div class="tile rise"><span class="ic"><svg aria-hidden="true"><use href="#i-flag"/></svg></span><h3>Meeting point</h3><p>Mark a place to gather and see who has arrived.</p></div>
+        <div class="tile rise"><span class="ic"><svg aria-hidden="true"><use href="#i-chat"/></svg></span><h3>Chat, photos &amp; private messages</h3><p>To the group or just one person, end-to-end encrypted.</p></div>
+        <div class="tile wide lamp rise"><span class="ic"><svg aria-hidden="true"><use href="#i-pulse"/></svg></span><h3>Siren &amp; medical card</h3><p>Siren and flashlight so you are easy to find, plus medical info that goes out with your SOS for rescuers.</p></div>
+        <div class="tile wide rise"><span class="ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>Disaster &amp; first-aid guide</h3><p>Earthquakes, floods, landslides, CPR, burns and more. Stored on the phone, readable without internet.</p></div>
+      </div>
+      <ul class="also rise" aria-label="More features">
+        <li>Voice notes</li><li>Saved chat history</li><li>Roll call</li><li>Simple mode for older users</li><li>Find missing family</li><li>Announcements</li><li>Member status &amp; battery</li><li>Battery saver</li><li>SOS + SMS</li><li>Automatic rejoin</li><li>English &amp; Indonesian</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="range">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">Range</p>
+        <h2>From one street <span class="serif">to a whole valley.</span></h2>
+        <p class="lede">It starts with just two phones. When the group spreads out, the reach grows step by step.</p>
+      </div>
+      <div class="range">
+        <div class="rung rise"><div class="km">50–100<small>m</small></div><div class="bar"><i style="width:8%"></i></div><h3>Phone to phone</h3><p>Direct Wi‑Fi Direct in the open. Shorter indoors.</p></div>
+        <div class="rung rise"><div class="km">+1<small>phone</small></div><div class="bar"><i style="width:18%"></i></div><h3>Bridge phone</h3><p>One phone in the middle relays messages to those out of reach.</p></div>
+        <div class="rung rise"><div class="km">1–3<small>km</small></div><div class="bar"><i style="width:55%"></i></div><h3>Base-camp Wi‑Fi</h3><p>Building Wi‑Fi, or a long-range antenna at the post, with an antenna aiming aid.</p></div>
+        <div class="rung rise"><div class="km">km+<small>LoRa</small></div><div class="bar"><i style="width:100%"></i></div><h3>LoRa gateway</h3><p>A Meshtastic device relays messages and SOS between groups up to several km.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="video">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">Video</p>
+        <h2>See how it works in <span class="serif">32 seconds.</span></h2>
+      </div>
+      <div class="film rise">
+        <video controls playsinline preload="none" poster="../media/launch-poster.jpg" aria-label="ZeroLink demo video: finding devices, walkie-talkie, announcements, status, SOS and compass with no signal">
+          <source src="../media/saling-jaga-launch.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="install">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">Install</p>
+        <h2>Install it now, <span class="serif">before you need it.</span></h2>
+      </div>
+      <div class="install">
+        <div class="rise">
+          <ol class="steps">
+            <li><span><b>Download the APK</b>from this page on an Android phone.</span></li>
+            <li><span><b>Open the file</b>and allow installs from this source. The Android warning is normal.</span></li>
+            <li><span><b>Turn on Wi‑Fi and Location</b>tap search, then connect to a friend's phone.</span></li>
+          </ol>
+          <p class="fine">Not on the Play Store yet. For friends without internet, send the APK over Quick Share or Bluetooth.</p>
+          <p class="fine">On a laptop, a Mac or an iPhone? Join the group in a browser, no internet: <a href="laptop/">see the laptop &amp; browser guide</a>.</p>
+          <div class="actions" style="margin-top:28px">
+            <a class="btn btn-primary" href="/zerolink.apk" data-goatcounter-click="unduh-apk-3" data-goatcounter-title="Download APK"><svg aria-hidden="true"><use href="#i-download"/></svg>Download free APK</a>
+          </div>
+          <details class="disclose">
+            <summary>See the illustrated install guide</summary>
+            <ol class="shots">
+              <li><img src="../install/1-buka-setelan.jpg" alt="Chrome dialog: the phone does not yet allow installing apps from this source" loading="lazy" width="360" height="800"><span>Tap <b>Settings</b></span></li>
+              <li><img src="../install/2-izinkan-sumber.jpg" alt="Install unknown apps setting for Chrome" loading="lazy" width="360" height="800"><span>Allow this source</span></li>
+              <li><img src="../install/3-instal.jpg" alt="Dialog: Do you want to install this app? ZeroLink" loading="lazy" width="360" height="800"><span>Tap <b>Install</b></span></li>
+              <li><img src="../install/4-scan-play-protect.jpg" alt="Google Play Protect: App scan recommended" loading="lazy" width="360" height="800"><span>Choose <b>Scan app</b></span></li>
+              <li><img src="../install/5-aman-instal.jpg" alt="Google Play Protect: This app looks safe" loading="lazy" width="360" height="800"><span>“Looks safe”</span></li>
+              <li><img src="../install/6-terpasang.jpg" alt="Dialog: App installed" loading="lazy" width="360" height="800"><span>Tap <b>Open</b></span></li>
+            </ol>
+          </details>
+        </div>
+        <figure class="howto rise">
+          <video controls playsinline preload="none" poster="../media/cara-instal-poster.jpg" width="720" height="1280" aria-label="How to install ZeroLink, video">
+            <source src="../media/saling-jaga-cara-instal.mp4" type="video/mp4">
+          </video>
+          <figcaption>Installing in 40 seconds: open the file, allow this source, <b>Install</b>, <b>Scan app</b> until it “looks safe”, then <b>Open</b>.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="news">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">Coming soon</p>
+        <h2>On iPhone, or prefer to <span class="serif">install from Play Store?</span></h2>
+      </div>
+      <div class="notify">
+        <div class="rise">
+          <svg aria-hidden="true"><use href="#i-phone"/></svg>
+          <h3>iPhone version</h3>
+          <p>The app is built and joins the same groups as Android phones. It can't be installed yet: we are still setting up the Apple Developer account, then opening a TestFlight beta. Sign up to join the beta or hear when it launches.</p>
+          <a class="btn btn-primary" data-waitlist="iphone" data-goatcounter-click="notify-iphone" data-goatcounter-title="Notify me: iPhone" href="mailto:info.salingjaga@gmail.com?subject=Notify%20me%3A%20Saling%20Jaga%20for%20iPhone&amp;body=Hi%2C%20please%20let%20me%20know%20when%20Saling%20Jaga%20can%20be%20installed%20on%20iPhone.%0A%0AName%3A%0ACity%3A%0AJoin%20the%20TestFlight%20beta%20(yes%2Fno)%3A"><svg aria-hidden="true"><use href="#i-bell"/></svg>Notify me</a>
+        </div>
+        <div class="rise">
+          <svg aria-hidden="true"><use href="#i-download"/></svg>
+          <h3>Google Play Store</h3>
+          <p>Coming soon to Play Store, so there's no need to allow installs from other sources and updates arrive on their own. Until then, the APK on this page is the same app.</p>
+          <a class="btn btn-ghost" data-waitlist="playstore" data-goatcounter-click="notify-playstore" data-goatcounter-title="Notify me: Play Store" href="mailto:info.salingjaga@gmail.com?subject=Notify%20me%3A%20Saling%20Jaga%20on%20Play%20Store&amp;body=Hi%2C%20please%20let%20me%20know%20when%20Saling%20Jaga%20is%20on%20Play%20Store.%0A%0AName%3A%0ACity%3A"><svg aria-hidden="true"><use href="#i-bell"/></svg>Tell me at launch</a>
+        </div>
+      </div>
+      <p class="fine">Your contact is only used for this news and is never shared.</p>
+      <form class="waitlist rise" id="daftar" hidden novalidate>
+        <h3>Sign up for news</h3>
+        <div class="fields">
+          <label>Name or nickname<input name="nama" maxlength="60" autocomplete="nickname" required></label>
+          <label>Any contact you're comfortable with<input name="kontak" maxlength="100" autocomplete="off" placeholder="@Threads/IG handle, email or WhatsApp" required></label>
+          <label>City (optional)<input name="kota" maxlength="60" autocomplete="address-level2"></label>
+        </div>
+        <fieldset>
+          <legend>Tell me about</legend>
+          <label class="check"><input type="checkbox" name="iphone" value="1">iPhone version</label>
+          <label class="check"><input type="checkbox" name="playstore" value="1">Play Store</label>
+        </fieldset>
+        <label class="check"><input type="checkbox" name="beta" value="1">I want to join the iPhone beta (TestFlight). We will send the link to the contact above.</label>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="lang" value="en">
+        <div class="send"><button class="btn btn-primary" type="submit" data-goatcounter-click="daftar-tunggu">Sign up</button><p class="status" role="status" aria-live="polite"></p></div>
+        <p class="fine">Your contact is only used for this news and is never shared. See the <a href="../privacy.html">privacy policy</a>.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" id="security">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">Security</p>
+        <h2>Safe to install, <span class="serif">even outside the Play Store.</span></h2>
+      </div>
+      <div class="trust">
+        <div class="rise"><svg aria-hidden="true"><use href="#i-shield"/></svg><h3>Passes Play Protect</h3><p>Scanned by Google on install: safe. No ads, analytics or trackers.</p></div>
+        <div class="rise"><svg aria-hidden="true"><use href="#i-hash"/></svg><h3>Verifiable download</h3><p>Every APK comes with its <a href="/zerolink.apk.sha256">SHA-256</a> to check against your download.</p></div>
+        <div class="rise"><svg aria-hidden="true"><use href="#i-lock"/></svg><h3>Data stays in the group</h3><p>No server, no account. AES‑256‑GCM encrypted between phones.</p></div>
+        <div class="rise"><svg aria-hidden="true"><use href="#i-userx"/></svg><h3>No impersonation</h3><p>Messages claiming to be from another member are rejected.</p></div>
+      </div>
+      <details class="disclose">
+        <summary>Which permissions does it ask for?</summary>
+        <table>
+          <tr><td>Location / Nearby devices</td><td>Required by Wi‑Fi Direct, also used for the compass and SOS distance</td></tr>
+          <tr><td>Microphone</td><td>Only while the talk button is held or a call is active</td></tr>
+          <tr><td>Notifications</td><td>SOS and messages while the screen is off</td></tr>
+          <tr><td>Not requested</td><td>Contacts, SMS, full gallery, call log</td></tr>
+        </table>
+      </details>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="wrap faq">
+      <div class="rise">
+        <p class="eyebrow">FAQ</p>
+        <h2>Questions people <span class="serif">often ask.</span></h2>
+      </div>
+      <div class="rise">
+        <details>
+          <summary>Really no internet or mobile credit?</summary>
+          <p>Really. The phone does not even need a SIM card. Only Wi‑Fi and Location have to be on. Internet is only used to download the APK and, if you want, the map of your area.</p>
+        </details>
+        <details>
+          <summary>How far does it reach?</summary>
+          <p>About 50–100 m in the open, less indoors. For more: a bridge phone in the middle, base-camp Wi‑Fi with a long-range antenna (1–3 km), or a Meshtastic LoRa device for messages and SOS between groups up to several km.</p>
+        </details>
+        <details>
+          <summary>How do I update?</summary>
+          <p>Download the latest APK and install it over the old version. Your name, photo and settings are kept.</p>
+        </details>
+        <details>
+          <summary>Can I use it from a laptop, Mac or browser?</summary>
+          <p>Yes. A Windows, Mac or Linux laptop, an iPhone or a tablet joins the group in a browser with no internet, either through an Android phone that opens its group to browsers or through the portable laptop app. <a href="laptop/">See the guide and downloads</a>.</p>
+        </details>
+        <details>
+          <summary>Is there an iPhone version?</summary>
+          <p>It's built, but can't be installed yet. We are still setting up the Apple Developer account, then opening a TestFlight beta. On iPhone, groups connect through Wi‑Fi post mode: one phone creates the group, the others join with a 6‑digit code on the same Wi‑Fi or hotspot. <a href="#news">Sign up to hear first</a>.</p>
+        </details>
+        <details>
+          <summary>When will it be on Play Store?</summary>
+          <p>Soon. Until then, install the APK from this page. Once the Play Store version is out you can switch without losing your name and settings. <a href="#news">Get told at launch</a>.</p>
+        </details>
+        <details>
+          <summary>My phone can't find the group. Why?</summary>
+          <p>Make sure Wi‑Fi and Location are on on both phones, the Location / Nearby devices permission is granted, and they are within 50–100 m. Some phones need the screen on while searching. If it still fails, swap roles: let the phone that was searching create the group.</p>
+        </details>
+        <details>
+          <summary>Is it free?</summary>
+          <p>Free for everyone, forever, with no ads. For search-and-rescue teams, relief posts or institutions that need training and customisation, <a href="mailto:info.salingjaga@gmail.com?subject=Saling%20Jaga%20-%20Partnership">get in touch</a>.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="end rise">
+      <img src="../brand/mark.png" alt="" width="96" height="96">
+      <h2>It only helps if the phones around you <span class="serif">have it too.</span></h2>
+      <p>Install it today, then share it with your family, neighbours and group.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/zerolink.apk" data-goatcounter-click="unduh-apk-4" data-goatcounter-title="Download APK"><svg aria-hidden="true"><use href="#i-download"/></svg>Download free APK</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="../brand/mark.png" alt="" width="28" height="28"><span>ZeroLink <small style="font-weight:600;opacity:.7">by PUAS</small></span></a>
+    <nav aria-label="Footer">
+      <a id="form-link" href="#" hidden data-goatcounter-click="form-masukan">Rate the app</a>
+      <a href="mailto:info.salingjaga@gmail.com?subject=Saling%20Jaga%20-%20Problem" data-goatcounter-click="lapor-masalah">Report a problem</a>
+      <a href="mailto:info.salingjaga@gmail.com?subject=Saling%20Jaga%20-%20Feature%20idea" data-goatcounter-click="usul-fitur">Suggest a feature</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <span>© 2026 PUAS · ZeroLink is built on the open-source Saling Jaga app</span>
+    </nav>
+  </div>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>
