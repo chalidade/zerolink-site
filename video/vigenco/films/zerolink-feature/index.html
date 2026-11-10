@@ -1,0 +1,148 @@
+<!doctype html>
+<!-- ZeroLink by PUAS: feature-by-feature hands-on films, 1920x1080, English. Vigenco custom film.
+     Job "feature": "<id>" picks one feature from features.js. Real ZeroLink screens (Robolectric, English UI)
+     shown at the phone's true proportions, never zoomed. A tap marker shows each touch; the step list explains it. -->
+<html lang="en"><head><meta charset="utf-8">
+<title>ZeroLink · Feature hands-on</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=block" rel="stylesheet">
+<style>
+:root{--night:#04201c;--cream:#f2edd5;--muted:#a9b9b3;--dim:#6d8580;--gold:#f6b84c;--goldInk:#072b26;--card:#0a302a}
+*{box-sizing:border-box;margin:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--night)}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Plus Jakarta Sans",sans-serif;color:var(--cream);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(900px 800px at 1390px 540px,rgba(14,96,84,.55),transparent 70%),radial-gradient(900px 600px at 300px 1100px,rgba(246,184,76,.10),transparent 70%),var(--night)}
+.a{position:absolute}
+#head{left:150px;top:110px;width:860px}
+.pill{display:inline-flex;align-items:center;gap:14px;padding:10px 22px;border-radius:999px;background:rgba(246,184,76,.14);color:var(--gold);font:700 24px/1 "Plus Jakarta Sans";letter-spacing:.02em}
+.pill img{width:30px;height:30px;border-radius:50%}
+#ftitle{margin-top:26px;font:800 70px/1.05 "Plus Jakarta Sans";letter-spacing:-.035em}
+#fsub{margin-top:16px;font:500 28px/1.4 "Plus Jakarta Sans";color:var(--muted);max-width:780px}
+#list{left:150px;top:0;width:820px}
+.row{position:absolute;left:0;width:820px}
+.rh{display:flex;align-items:center;gap:20px;height:52px}
+.num{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;font:800 21px/1 "Plus Jakarta Sans";background:rgba(242,237,213,.08);color:var(--dim)}
+.rt{font:700 29px/1.1 "Plus Jakarta Sans";color:var(--dim);letter-spacing:-.01em}
+.rd{margin:6px 0 0 64px;font:500 26px/1.42 "Plus Jakarta Sans";color:var(--cream);max-width:740px}
+#phone{left:1150px;top:66px;width:463px;height:948px;border-radius:64px;background:#0b0f0e;box-shadow:0 60px 120px -30px rgba(0,0,0,.85),inset 0 0 0 3px rgba(242,237,213,.14)}
+#scr{left:1174px;top:90px;width:415px;height:900px;border-radius:44px;overflow:hidden;background:#f6f6f2}
+#scr img{position:absolute;left:0;top:0;width:415px;height:900px}
+.tap{width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;z-index:60}
+.full{left:0;top:0;width:1920px;height:1080px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#bar{left:150px;bottom:64px;width:820px;height:4px;border-radius:2px;background:rgba(242,237,213,.08);overflow:hidden}
+#barIn{height:4px;background:var(--gold);width:0}
+</style></head><body>
+<div id="stage">
+  <div class="a" id="head"></div>
+  <div class="a" id="list"></div>
+  <div class="a" id="bar"><div id="barIn"></div></div>
+  <div class="a" id="phone"></div>
+  <div class="a" id="scr"></div>
+  <div class="a full" id="end"></div>
+  <div class="a tap" id="tap"></div>
+</div>
+<script src="features.js"></script>
+<script>
+(async function(){try{
+const SPEC=window.SPEC||{};
+const fid=SPEC.feature||new URLSearchParams(location.search).get('feature')||'connect';
+const FI=FEATURES.findIndex(f=>f.id===fid);const F=FEATURES[FI];if(!F)throw new Error('unknown feature '+fid);
+const NEXT=FEATURES[FI+1];
+
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>1-Math.pow(1-cl(x),3);
+const io=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const back=x=>{x=cl(x);const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const win=(t,a,b,d=.3)=>Math.min(ease((t-a)/d),ease((b-t)/d));
+const mk=(html,p)=>{const d=document.createElement('div');d.innerHTML=html.trim();const e=d.firstElementChild;p.appendChild(e);return e;};
+const vis=(e,o,tr)=>{e.style.opacity=o.toFixed(3);e.style.visibility=o<=.001?'hidden':'visible';if(tr!==undefined)e.style.transform=tr;};
+
+// ---- timing: each step lasts long enough to read its detail; a tap lands 1.1 s before the step ends.
+const T0=2.4,SW=415,SH=900,SX=1174,SY=90;
+const S=F.steps.map(s=>{const words=(s[3]+' '+s[4]).split(/\s+/).length;const hold=s[5]||0;
+  return {img:s[0],tx:s[1],ty:s[2],title:s[3],detail:s[4],hold,dur:+Math.min(7.2,Math.max(4.4,2.2+words*.2)+hold).toFixed(2)};});
+let acc=T0;S.forEach(s=>{s.a=acc;acc+=s.dur;s.b=acc;s.tap=s.tx==null?null:+(s.b-1.1-s.hold).toFixed(2);});
+const TEND=acc,DUR=+(TEND+4.2).toFixed(2);
+
+// ---- header and step list
+mk(`<div><span class="pill"><img src="assets/mark.png">ZeroLink hands-on · ${FI+1} of ${FEATURES.length}</span></div>`,$('head'));
+mk(`<div id="ftitle">${F.title}</div>`,$('head'));
+mk(`<div id="fsub">${F.sub}</div>`,$('head'));
+const rows=S.map((s,i)=>mk(`<div class="row"><div class="rh"><span class="num">${i+1}</span><span class="rt">${s.title}</span></div><div class="rd">${s.detail}</div></div>`,$('list')));
+const imgs=S.map(s=>mk(`<img src="assets/${s.img}.jpg">`,$('scr')));
+
+// ---- end card
+mk(`<img id="eLogo" src="assets/mark.png" style="width:150px;height:150px;border-radius:50%">`,$('end'));
+mk(`<div id="eW" style="margin-top:34px;font:800 96px/1 'Plus Jakarta Sans';letter-spacing:-.05em">Zero<span style="color:var(--gold)">Link</span></div>`,$('end'));
+mk(`<div id="eH" style="margin-top:22px;font:600 38px/1.3 'Plus Jakarta Sans'">${F.title}. <span style="color:var(--gold)">No internet needed.</span></div>`,$('end'));
+mk(`<div id="eU" style="margin-top:44px;padding:22px 48px;border-radius:999px;background:var(--gold);color:var(--goldInk);font:800 38px/1 'Plus Jakarta Sans'">zerolink.web.id</div>`,$('end'));
+mk(`<div id="eF" style="margin-top:34px;font:500 26px/1.5 'Plus Jakarta Sans';color:var(--muted)">${NEXT?`Next: ${NEXT.title}`:'Free · no account · no ads · Android 6.0+'}</div>`,$('end'));
+
+await document.fonts.ready;
+await Promise.all([...document.images].map(im=>im.complete?0:new Promise(r=>{im.onload=im.onerror=r;})));
+// measure: rows collapsed height and expanded detail height
+const ROWH=60;const DH=rows.map(r=>r.querySelector('.rd').offsetHeight+14);
+const headH=$('head').offsetHeight;const LIST_TOP=110+headH+44;
+
+// ---- sound cues
+const cues=[];const cue=(t,k,x)=>cues.push(Object.assign({t:+t.toFixed(3),k},x||{}));
+cue(.15,'born');cue(.5,'pop',{n:0});cue(.9,'whoosh',{v:.5});
+S.forEach((s,i)=>{if(i)cue(s.a,'swap',{n:i});cue(s.a+.15,'tick');
+  if(s.tap!=null){cue(s.tap,'click');if(s.hold){cue(s.tap+.05,'drag',{d:s.hold});cue(s.tap+s.hold,'release');}}
+  if(/sos-masuk|sirine/.test(s.img)){cue(s.a+.2,'alert');cue(s.a+.8,'alert');}
+  if(/hasil-absen|titik-kumpul$|kode-keamanan|23-titik/.test(s.img))cue(s.a+.4,'check');});
+cue(TEND,'whoosh');cue(TEND+.3,'pop',{n:1});cue(TEND+.8,'pop',{n:2});cue(TEND+1.3,'cta');cue(TEND+1.8,'shimmer');
+
+window.seek=function(t){
+ const live=win(t,0,TEND,.45);
+ // header
+ vis($('head'),live,`translateY(${((1-ease(t/.6))*24).toFixed(1)}px)`);
+ // list: rows slide in one by one, the active row expands
+ let y=LIST_TOP;
+ S.forEach((s,i)=>{
+  const appear=ease((t-.6-i*.08)/.4);
+  const e=t<s.a?0:(i===S.length-1?ease((t-s.a)/.35):win(t,s.a,s.b,.35));
+  const done=t>=s.b;
+  const r=rows[i];r.style.top=y.toFixed(1)+'px';
+  vis(r,appear*live,`translateX(${((1-appear)*-30).toFixed(1)}px)`);
+  const num=r.querySelector('.num'),rt=r.querySelector('.rt'),rd=r.querySelector('.rd');
+  num.style.background=e>.5?'var(--gold)':done?'rgba(246,184,76,.22)':'rgba(242,237,213,.08)';
+  num.style.color=e>.5?'var(--goldInk)':done?'var(--gold)':'var(--dim)';
+  rt.style.color=e>.5?'var(--cream)':done?'var(--muted)':'var(--dim)';
+  rt.style.fontSize=(29+5*e).toFixed(1)+'px';
+  rd.style.opacity=e.toFixed(3);rd.style.transform=`translateY(${((1-e)*-8).toFixed(1)}px)`;
+  y+=ROWH+DH[i]*e;
+ });
+ // progress bar
+ $('barIn').style.width=(cl((t-T0)/(TEND-T0))*100).toFixed(2)+'%';vis($('bar'),live);
+ // phone slides in from the right, out at the end
+ const pin=ease((t-.3)/.7),pout=ease((t-TEND+.2)/.5);
+ const px=(1-pin)*160+pout*120;
+ ['phone','scr'].forEach(id=>vis($(id),pin*(1-pout),`translateX(${px.toFixed(1)}px)`));
+ // screens: hard cut feel with a quick 0.18 s crossfade, true size, no zoom
+ S.forEach((s,i)=>{const o=i===0?1:ease((t-s.a)/.18);vis(imgs[i],t<s.a&&i>0?0:o);imgs[i].style.zIndex=i;});
+ // end card
+ vis($('end'),ease((t-TEND)/.4));
+ $('eLogo').style.transform=`scale(${(.5+.5*back((t-TEND)/.5)).toFixed(4)})`;
+ [['eW',.25],['eH',.5],['eU',.8],['eF',1.4]].forEach(([id,a])=>{const p=ease((t-TEND-a)/.4);$(id).style.opacity=p;
+   $(id).style.transform=`translateY(${(1-p)*24}px)`+(id==='eU'?` scale(${(1-.05*Math.exp(-(((t-TEND-1.3)/.08)**2))).toFixed(4)})`:'');});
+ // tap marker
+ const tap=$('tap');let cur=null;
+ S.forEach(s=>{if(s.tap!=null&&t>=s.tap-.7&&t<s.tap+s.hold+.5)cur=s;});
+ if(cur&&pin>.9&&pout<.1){const s=cur;const k=t-s.tap,held=s.hold&&k>=0&&k<s.hold,after=k-(s.hold||0);
+  tap.style.left=(SX+s.tx*SW+px).toFixed(1)+'px';tap.style.top=(SY+s.ty*SH).toFixed(1)+'px';
+  let sc,o;if(k<0){const p=cl((k+.7)/.3);sc=1.25-.25*p-.2*cl((k+.15)/.15);o=p*.95;}
+  else if(held){sc=.8+.05*Math.sin(k*12);o=.95;}else{sc=.85+after*1.4;o=.95*(1-cl(after/.45));}
+  tap.style.opacity=o.toFixed(3);tap.style.transform=`scale(${sc.toFixed(3)})`;
+  tap.style.background=k<0?'rgba(246,184,76,.28)':'rgba(246,184,76,.4)';
+  tap.style.boxShadow=`0 0 0 5px rgba(246,184,76,${k<0?.95:held?.95:.7*(1-cl(after/.45))}),0 8px 24px rgba(0,0,0,.35)`;
+ }else tap.style.opacity=0;
+};
+window.FILM={type:'custom',width:1920,height:1080,bpm:110,duration:DUR,
+  sections:{intro:[0,T0],features:[T0,TEND-2],drop:[TEND-2,TEND],outro:[TEND,DUR]},cues:cues.sort((a,b)=>a.t-b.t)};
+window.TAPTIMES=S.filter(s=>s.tap!=null).map(s=>s.tap+.02);
+window.seek(0);window.READY=true;
+}catch(err){window.FILM_ERROR=String(err&&err.stack||err);}})();
+</script></body></html>
