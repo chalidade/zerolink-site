@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZeroLink · Every worker home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #020f0d; overflow: hidden; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #020f0d;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: #f2edd5; -webkit-font-smoothing: antialiased; }
+  #sky, #world, #hud, #grain, #vig { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #world > *, #hud > * { position: absolute; }
+  #vig { background: radial-gradient(1400px 900px at 50% 50%, transparent 55%, rgba(0,0,0,.65)); pointer-events: none; }
+  .bar { position: absolute; left: 0; width: 1920px; height: 96px; background: #000; z-index: 90; }
+  .serif { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -.005em; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  .ic { display: inline-flex; flex: none; }
+  .av { border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; flex: none; }
+  * { box-sizing: border-box; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="sky"></div>
+  <div id="world"></div>
+  <div id="vig"></div>
+  <div id="hud"></div>
+  <div class="bar" id="barT" style="top:0"></div>
+  <div class="bar" id="barB" style="bottom:0"></div>
+</div>
+<script src="../../types/_shared/motion.js"></script>
+<script src="film.js"></script>
+</body>
+</html>

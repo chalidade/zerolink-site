@@ -59,3 +59,9 @@ from Vigenco.
 
 `films/zerolink-mining-motion` is the same motion film adapted to a remote mine site: a shift crew with no
 coverage, a blast notice, a muster point, a headcount before the blast, a search for a driller and a man-down SOS.
+
+## "Every worker home", mining & energy story (English, 62 s)
+
+`films/zerolink-mining-story` is a cinematic, emotional film for mining and energy pitches: one driller's day from
+his daughter's drawing at dawn, through a wall collapse on the night shift, to home by morning. Letterboxed, slow
+springs, an SVG landscape whose crew lights become the network; the app appears only for the SOS and headcount.
