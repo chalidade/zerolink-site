@@ -29,3 +29,9 @@ cp -r video/vigenco/films/zerolink-install <vigenco>/films/
 cp video/vigenco/jobs/zerolink-install-*.json <vigenco>/jobs/
 cd <vigenco> && node bin/vigenco.mjs render jobs/zerolink-install-id.json --out out/zerolink-install-id.mp4
 ```
+
+## Hands-on (English)
+
+`films/zerolink-handson` walks through 13 app features in 53.6 s (vertical 1080x1920, 60 fps).
+Render with `node bin/vigenco.mjs render jobs/zerolink-handson-en.json --out zerolink-handson-en.mp4`.
+The screenshots in `assets/` show the Indonesian app UI; captions are English.
