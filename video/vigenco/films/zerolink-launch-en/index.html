@@ -1,0 +1,268 @@
+<!doctype html>
+<!-- ZeroLink by PUAS: 32 s launch film, 1920x1080, English. Vigenco custom film: window.seek(t) draws a frame,
+     window.FILM exports duration, bpm, sections and sound cues for the synth. Ported from the Saling Jaga launch film
+     (tools/launch-video/scene.html) with the ZeroLink palette and brand. Nothing animates on its own. -->
+<html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=block" rel="stylesheet">
+<style>
+:root{--bg:#f4f1e8;--ink:#0b2622;--muted:#5d6f6a;--leaf:#169678;--brand:#0b3d36;--dark:#08302a;--amber:#d68c20;--sos:#d93636;--budi:#e8590c;--sari:#d6336c;--rt:#0e6054;--kamu:#d68c20}
+*{box-sizing:border-box;margin:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",sans-serif;-webkit-font-smoothing:antialiased}
+.a{position:absolute}
+.c{left:50%;top:50%}
+.blob{border-radius:50%;filter:blur(90px)}
+.cap{font-size:72px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+.pill{display:flex;align-items:center;gap:22px;padding:22px 40px;border-radius:99px;background:#fff;box-shadow:0 18px 50px rgba(20,40,25,.10);font-weight:700;font-size:36px;white-space:nowrap}
+.card{background:#fff;border-radius:34px;box-shadow:0 30px 80px rgba(20,40,25,.12)}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800}
+.mem{display:flex;flex-direction:column;align-items:center;gap:6px;width:190px}
+.mem .av{width:84px;height:84px;font-size:36px;position:relative}
+.mem b{font-size:24px}.mem small{font-size:19px;color:var(--muted)}
+.cur{width:0;height:0;z-index:50}
+.cur svg{position:absolute;left:-4px;top:-4px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+.cur span{position:absolute;left:26px;top:30px;padding:5px 14px;border-radius:99px;color:#fff;font-size:19px;font-weight:700}
+.cur i{position:absolute;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%;border:4px solid currentColor;opacity:0}
+.wave{display:flex;gap:6px;align-items:center;height:60px}.wave b{width:7px;border-radius:4px;background:#fff}
+.node{width:44px;height:44px;font-size:20px}
+</style></head><body>
+<div class="a blob" style="width:700px;height:600px;left:-150px;top:-200px;background:rgba(22,150,120,.18)"></div>
+<div class="a blob" style="width:800px;height:600px;right:-200px;bottom:-250px;background:rgba(242,196,107,.22)"></div>
+<div class="a blob" id="redblob" style="width:900px;height:700px;left:500px;top:200px;background:rgba(217,54,54,.16);opacity:0"></div>
+
+<!-- A: signal -->
+<div id="status" class="a pill c" style="gap:60px"><span>03:10</span><span style="display:flex;align-items:center;gap:14px"><small id="net" style="font-size:24px"></small><span id="bars" style="display:flex;gap:6px;align-items:flex-end"></span></span></div>
+<div id="nosvc" class="a pill c" style="background:#ecebe4;color:#555;box-shadow:none"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.2" stroke-linecap="round"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4 2 22"/></svg><span id="tNosvc">Tidak ada layanan</span></div>
+<div id="cap1" class="a cap c">Saat bencana datang,</div>
+<div id="cap2" class="a cap c">sinyal ikut hilang.</div>
+<div id="cap3" class="a cap c" style="color:var(--leaf)">Kita tetap terhubung.</div>
+
+<!-- B: search -->
+<div id="search" class="a av c" style="width:150px;height:150px;background:var(--leaf);box-shadow:0 20px 50px rgba(22,150,120,.4)"><svg id="sIcon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><svg id="wIcon" class="a" width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0"/><circle cx="12" cy="19.5" r="1" fill="#fff"/></svg></div>
+<div id="srings"></div>
+<div id="scanTxt" class="a c" style="font-size:28px;font-weight:600;color:var(--muted);white-space:nowrap">Mencari HP di sekitar… tanpa internet</div>
+<div id="peerB" class="a mem c"><span class="av" style="background:var(--budi)">B</span><b>Budi</b><small>Galaxy A15</small></div>
+<div id="peerS" class="a mem c"><span class="av" style="background:var(--sari)">S</span><b>Sari</b><small>Redmi Note 13</small></div>
+<div id="peerP" class="a mem c"><span class="av" style="background:var(--rt)">P</span><b>Pak RT</b><small>Oppo A78</small></div>
+
+<!-- C: group, in the app's new look -->
+<div id="group" class="a card c" style="width:1000px;overflow:hidden">
+  <div style="background:var(--brand);color:#fff;padding:30px 40px;display:flex;align-items:center;gap:22px">
+    <img src="assets/mark.png" style="width:66px;height:66px;border-radius:50%;background:#e0f0ec;padding:6px">
+    <div><div style="font-size:34px;font-weight:700" id="tGroup">Grup · 4 orang</div><div style="font-size:22px;opacity:.8">Budi, Sari, Pak RT</div></div>
+  </div>
+  <div style="height:250px"></div>
+</div>
+<div id="members" class="a c" style="display:flex;gap:40px"></div>
+
+<!-- D: input bar and talking -->
+<div id="bar" class="a c" style="display:flex;align-items:center;gap:22px">
+  <span class="av" style="width:110px;height:110px;background:var(--sos);font-size:30px">SOS</span>
+  <span class="card" style="width:560px;height:110px;border-radius:99px;display:flex;align-items:center;gap:22px;padding:0 36px;font-size:32px;color:#8a938b"><b style="font-size:48px;font-weight:400;color:#555">+</b><span id="tType">Ketik pesan</span><svg style="margin-left:auto" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+  <span id="mic" class="av" style="width:130px;height:130px;background:var(--brand)"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
+</div>
+<div id="hint" class="a c" style="font-size:28px;font-weight:600;color:var(--muted)">Tahan untuk bicara</div>
+<div id="talk" class="a c" style="display:flex;align-items:center;gap:26px;padding:22px 40px 22px 22px;border-radius:99px;color:#fff;font-size:42px;font-weight:700;white-space:nowrap">
+  <span id="talkAv" class="av" style="width:76px;height:76px;font-size:32px;border:4px solid #fff"></span><span id="talkTxt"></span><span class="wave" id="wave"></span>
+</div>
+
+<!-- E: announcement -->
+<div id="ann" class="a c" style="width:1000px;padding:40px 48px;border-radius:30px;background:#fff4d6;box-shadow:0 30px 80px rgba(120,90,10,.15)">
+  <div style="font-size:22px;font-weight:800;letter-spacing:.08em;color:#9a6a00" id="tAnn">🔔 PENGUMUMAN · PAK RT</div>
+  <div style="display:flex;align-items:center;margin-top:16px"><span id="annTxt" style="font-size:56px;font-weight:800;letter-spacing:-.02em;min-height:72px"></span><span id="caret" style="width:4px;height:60px;background:var(--leaf);margin-left:4px"></span>
+  <span class="av" style="margin-left:auto;width:84px;height:84px;background:var(--leaf)"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span></div>
+</div>
+
+<!-- F: status -->
+<div id="ask" class="a cap c" style="font-size:52px">Bagaimana kondisimu?</div>
+<div id="seg" class="a card c" style="display:flex;padding:10px;border-radius:99px;gap:6px;font-size:34px;font-weight:700">
+  <span id="sg0" style="padding:20px 56px;border-radius:99px">Aman</span><span id="sg1" style="padding:20px 56px;border-radius:99px">Butuh bantuan</span><span id="sg2" style="padding:20px 56px;border-radius:99px">Terluka</span>
+</div>
+
+<!-- G: SOS -->
+<div id="sosBtn" class="a c" style="padding:30px 110px;border-radius:99px;background:var(--sos);color:#fff;font-size:80px;font-weight:800;letter-spacing:.04em;box-shadow:0 30px 70px rgba(217,54,54,.4)">SOS</div>
+<div id="confirm" class="a card c" style="width:720px;padding:46px 50px">
+  <div style="font-size:48px;font-weight:800" id="tSend">Kirim SOS?</div>
+  <div style="font-size:26px;color:var(--muted);margin-top:12px" id="tSendSub">Semua HP di grup akan berbunyi dan melihat lokasimu.</div>
+  <div style="display:flex;justify-content:flex-end;align-items:center;gap:30px;margin-top:34px;font-size:28px;font-weight:700"><span>SOS + SMS</span><span id="kirim" style="padding:18px 34px;border-radius:99px;background:var(--sos);color:#fff">Kirim SOS</span></div>
+</div>
+
+<!-- H: SOS card, new compact look -->
+<div id="sosring" class="a c" style="width:1300px;height:420px;border-radius:80px;border:3px solid rgba(217,54,54,.35)"></div>
+<div id="sosCard" class="a c" style="width:1200px;padding:44px 52px;border-radius:44px;background:#fdecec;border:4px solid var(--sos);display:flex;align-items:center;gap:40px;box-shadow:0 30px 80px rgba(217,54,54,.25)">
+  <span class="av" style="width:130px;height:130px;background:var(--sari);font-size:56px">S</span>
+  <div style="flex:1"><div style="font-size:30px;font-weight:800;color:var(--sos);letter-spacing:.04em" id="tSos1">SOS · SARI MINTA TOLONG</div><div style="font-size:66px;font-weight:800;letter-spacing:-.02em" id="tSos2">259 m ke barat laut</div><div style="font-size:30px;color:var(--muted)" id="tSos3">baterai 21% · baru saja</div></div>
+  <span style="padding:22px 36px;border-radius:99px;background:var(--sos);color:#fff;font-size:30px;font-weight:700;white-space:nowrap" id="tMute">Matikan alarm</span>
+</div>
+
+<!-- I: compass -->
+<canvas id="radar" class="a" width="1040" height="1040" style="left:220px;top:20px;width:1040px;height:1040px"></canvas>
+<div id="dist" class="a" style="left:1320px;top:370px">
+  <div style="font-size:30px;font-weight:800;letter-spacing:.08em;color:var(--sari)">SARI · SOS</div>
+  <div style="font-size:190px;font-weight:800;letter-spacing:-.04em;line-height:1"><span id="dNum">259</span><span style="font-size:90px"> m</span></div>
+  <div id="dDir" style="font-size:40px;font-weight:600;color:var(--muted)">ke arah barat laut</div>
+</div>
+
+<!-- J: found -->
+<div id="found" class="a cap c" style="font-size:66px">Sari ditemukan.</div>
+<div id="found2" class="a cap c" style="font-size:66px;color:var(--leaf)">Semua saling jaga.</div>
+<div id="cancel" class="a c" style="padding:30px 80px;border-radius:99px;color:#fff;font-size:44px;font-weight:700;white-space:nowrap;box-shadow:0 20px 50px rgba(0,0,0,.12)"></div>
+
+<!-- K: network -->
+<svg id="lines" class="a" width="1920" height="1080" style="left:0;top:0"></svg>
+<div id="nodes"></div>
+<div id="tagline" class="a c" style="padding:26px 60px;border-radius:99px;font-size:58px;font-weight:800;white-space:nowrap;box-shadow:0 20px 50px rgba(0,0,0,.12)"></div>
+
+<!-- L: end -->
+<div id="wipe" class="a c av" style="background:var(--leaf)"></div>
+<div id="end" class="a" style="left:0;right:0;top:170px;display:flex;flex-direction:column;align-items:center">
+  <img id="logo" src="assets/mark.png" style="width:300px">
+  <div id="wm" style="font-size:110px;font-weight:800;letter-spacing:-.03em;margin-top:6px"><span style="color:var(--brand)">Zero</span><span style="color:var(--amber)">Link</span></div>
+  <div id="tl" style="font-size:38px;font-weight:600;color:var(--muted);margin-top:-6px">by PUAS · stay connected when the signal is gone</div>
+  <div id="cta" style="display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:40px">
+    <span style="display:flex;align-items:center;gap:16px;padding:22px 46px;border-radius:99px;background:var(--brand);color:#fff;font-size:36px;font-weight:700"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span id="tDl">Unduh APK gratis</span></span>
+    <span style="font-size:32px;font-weight:700;color:var(--ink)" id="tUrl">saling-jaga.com</span>
+  </div>
+</div>
+
+<div id="curK" class="a cur" style="color:var(--leaf)"><i></i><svg width="34" height="40" viewBox="0 0 17 20"><path d="M1 1v15l4-4 3 7 3-1-3-7h6z" fill="#16211b" stroke="#fff" stroke-width="1.4"/></svg><span style="background:var(--leaf)" id="tYou">Kamu</span></div>
+<div id="curS" class="a cur" style="color:var(--sari)"><i></i><svg width="34" height="40" viewBox="0 0 17 20"><path d="M1 1v15l4-4 3 7 3-1-3-7h6z" fill="#16211b" stroke="#fff" stroke-width="1.4"/></svg><span style="background:var(--sari)">Sari</span></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>1-Math.pow(1-cl(x),3);
+const io=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const back=x=>{x=cl(x);const c=1.6;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const win=(t,a,b,d=.3)=>Math.min(ease((t-a)/d),ease((b-t)/d));
+// Place an element centred on (x,y) with opacity o and scale s; blur when entering for the soft feel of the first video.
+function put(el,x,y,o=1,s=1,blur=0){el.style.transform=`translate(-50%,-50%) translate(${x-960}px,${y-540}px) scale(${s})`;el.style.opacity=o;el.style.filter=blur>0.2?`blur(${blur}px)`:'';el.style.visibility=o<=0.001?'hidden':'visible';}
+function show(el,t,a,b,x,y,d=.3,dy=30){const o=win(t,a,b,d);put(el,x,y+(1-ease((t-a)/d))*dy,o,1,(1-o)*10);return o;}
+
+
+// Text per language: scene.html (Indonesian) or scene.html?en (English).
+const EN=true;
+const L=EN?{nosvc:'No service',cap1:'When disaster strikes,',cap2:'the signal goes too.',cap3:'We stay connected.',scan:'Finding nearby phones… no internet',group:'Group · 4 people',you:'You',safe:'Safe',type:'Type a message',hint:'Hold to talk',youTalk:'You are talking',budiTalk:'Budi is talking',ann:'🔔 ANNOUNCEMENT · PAK RT',msg:'Meet at the school field.',ask:'How are you?',seg:['Safe','Need help','Injured'],help:'Need help',send:'Send SOS?',sendSub:'Every phone in the group will ring and see where you are.',sendBtn:'Send SOS',sos1:'SOS · SARI NEEDS HELP',sos2:'259 m north-west',sos3:'battery 21% · just now',mute:'Stop alarm',dir1:'north-west',dir2:'straight ahead',found:'Sari found.',found2:'Everyone stays connected.',cancel:'Cancel SOS',safeBtn:'Sari is safe',tags:['No signal','No internet','No SIM card','No server','Free for everyone'],card:['N','E','S','W'],dl:'Download free APK',url:'zerolink.web.id'}
+:{nosvc:'Tidak ada layanan',cap1:'Saat bencana datang,',cap2:'sinyal ikut hilang.',cap3:'Kita tetap terhubung.',scan:'Mencari HP di sekitar… tanpa internet',group:'Grup · 4 orang',you:'Kamu',safe:'Aman',type:'Ketik pesan',hint:'Tahan untuk bicara',youTalk:'Kamu sedang bicara',budiTalk:'Budi sedang bicara',ann:'🔔 PENGUMUMAN · PAK RT',msg:'Kumpul di lapangan SD 2.',ask:'Bagaimana kondisimu?',seg:['Aman','Butuh bantuan','Terluka'],help:'Butuh bantuan',send:'Kirim SOS?',sendSub:'Semua HP di grup akan berbunyi dan melihat lokasimu.',sendBtn:'Kirim SOS',sos1:'SOS · SARI MINTA TOLONG',sos2:'259 m ke barat laut',sos3:'baterai 21% · baru saja',mute:'Matikan alarm',dir1:'ke arah barat laut',dir2:'tepat di depanmu',found:'Sari ditemukan.',found2:'Semua saling jaga.',cancel:'Batalkan SOS',safeBtn:'Sari aman',tags:['Tanpa sinyal','Tanpa internet','Tanpa kartu SIM','Tanpa server','Gratis untuk warga'],card:['U','T','S','B'],dl:'Unduh APK gratis',url:'saling-jaga.com'};
+document.documentElement.lang=EN?'en':'id';
+const T=(id,v)=>{$(id).textContent=v;};
+T('tNosvc',L.nosvc);T('cap1',L.cap1);T('cap2',L.cap2);T('cap3',L.cap3);T('scanTxt',L.scan);T('tGroup',L.group);T('tType',L.type);T('hint',L.hint);T('tAnn',L.ann);T('ask',L.ask);
+['sg0','sg1','sg2'].forEach((id,i)=>T(id,L.seg[i]));T('tSend',L.send);T('tSendSub',L.sendSub);T('kirim',L.sendBtn);T('tSos1',L.sos1);T('tSos2',L.sos2);T('tSos3',L.sos3);T('tMute',L.mute);
+T('found',L.found);T('found2',L.found2);T('tDl',L.dl);T('tUrl',L.url);T('tYou',L.you);
+// members (Kamu, Budi, Sari, Pak RT)
+const M=[['K',L.you,'var(--kamu)',L.safe],['B','Budi','var(--budi)',L.safe+' · 78%'],['S','Sari','var(--sari)',L.safe+' · 23%'],['P','Pak RT','var(--rt)',L.safe+' · 91%']];
+$('members').innerHTML=M.map((m,i)=>`<div class="mem"><span class="av" id="mav${i}" style="background:${m[2]}">${m[0]}</span><b>${m[1]}</b><small id="mst${i}">${m[3]}</small></div>`).join('');
+const bars=$('bars');for(let i=0;i<4;i++){const b=document.createElement('b');b.style.cssText=`display:block;width:9px;height:${12+i*8}px;border-radius:2px`;bars.appendChild(b);}
+const sr=$('srings');for(let i=0;i<3;i++){const r=document.createElement('div');r.className='a c';r.style.cssText='border:3px solid rgba(22,150,120,.25);border-radius:50%';sr.appendChild(r);}
+const wave=$('wave');for(let i=0;i<16;i++)wave.appendChild(document.createElement('b'));
+// network nodes
+const letters='LMNOJIHGFEDBAYWTRS'.split(''),cols=['#0e6054','#d68c20','#169678','#e0a019','#d6336c','#e8590c','#0b3d36'];
+const nodes=letters.map((l,i)=>{const a=i/letters.length*Math.PI*2+Math.PI*.9, rr=430+((i*37)%5)*48;const el=document.createElement('div');el.className='a av node c';el.textContent=l;el.style.background=cols[i%cols.length];$('nodes').appendChild(el);return {el,x:960+Math.cos(a)*rr*1.45,y:540+Math.sin(a)*rr*.95};});
+$('lines').innerHTML=nodes.map(n=>`<line x1="960" y1="540" x2="${n.x}" y2="${n.y}" stroke="rgba(22,150,120,.35)" stroke-width="2" stroke-dasharray="6 10"/>`).join('');
+
+// cursor: keyframes [t,x,y], clicks [t]
+function cursor(el,t,a,b,keys,clicks){const o=win(t,a,b,.25);let x=keys[0][1],y=keys[0][2];for(let i=1;i<keys.length;i++){const[k0,x0,y0]=keys[i-1],[k1,x1,y1]=keys[i];if(t>=k0){const p=io((t-k0)/(k1-k0));x=x0+(x1-x0)*p;y=y0+(y1-y0)*p;}}
+ el.style.opacity=o;el.style.transform=`translate(${x}px,${y}px)`;const r=el.querySelector('i');let rp=0;clicks.forEach(c=>{if(t>=c&&t<c+.4)rp=(t-c)/.4;});r.style.opacity=rp?1-rp:0;r.style.transform=`scale(${.4+rp})`;}
+
+function drawRadar(t,o){const cv=$('radar'),c=cv.getContext('2d');c.clearRect(0,0,1040,1040);if(o<=0)return;c.globalAlpha=o;
+ const cx=520,cy=520,R=470,F=R-52;const rot=io((t-19.0)/.7)*-48; // turn to face Sari
+ c.fillStyle='#181b1f';c.beginPath();c.arc(cx,cy,R,0,7);c.fill();
+ let g=c.createRadialGradient(cx,cy,0,cx,cy,F);g.addColorStop(0,'#30363c');g.addColorStop(1,'#181b1f');c.fillStyle=g;c.beginPath();c.arc(cx,cy,F,0,7);c.fill();
+ g=c.createRadialGradient(cx,cy,0,cx,cy,F);g.addColorStop(0,'rgba(22,150,120,.4)');g.addColorStop(1,'rgba(22,150,120,0)');c.fillStyle=g;c.beginPath();c.moveTo(cx,cy);c.arc(cx,cy,F,-Math.PI/2-.49,-Math.PI/2+.49);c.closePath();c.fill();
+ c.strokeStyle='rgba(255,255,255,.2)';c.lineWidth=2;for(let i=1;i<=3;i++){c.beginPath();c.arc(cx,cy,F*i/3,0,7);c.stroke();}
+ for(let d=0;d<360;d+=10){if(d%90==0)continue;const a=(d+rot)*Math.PI/180,l=d%30==0?18:10;c.strokeStyle='rgba(255,255,255,.4)';c.lineWidth=d%30==0?3:2;c.beginPath();c.moveTo(cx+Math.sin(a)*(R-8),cy-Math.cos(a)*(R-8));c.lineTo(cx+Math.sin(a)*(R-8-l),cy-Math.cos(a)*(R-8-l));c.stroke();}
+ c.font='700 30px "Plus Jakarta Sans"';c.textAlign='center';c.textBaseline='middle';L.card.forEach((n,i)=>{const a=(i*90+rot)*Math.PI/180;c.fillStyle=i==0?'#ff6b6b':'#fff';c.fillText(n,cx+Math.sin(a)*(R-26),cy-Math.cos(a)*(R-26));});
+ c.fillStyle='rgba(22,150,120,.25)';c.beginPath();c.arc(cx,cy,34,0,7);c.fill();c.fillStyle='#fff';c.beginPath();c.arc(cx,cy,17,0,7);c.fill();c.fillStyle='#169678';c.beginPath();c.arc(cx,cy,12,0,7);c.fill();
+ const d=dist(t);const pts=[['B','#e8590c',252,0,'Budi'],['P','#0e6054',470,135,'Pak RT'],['S','#d6336c',d,-48,'Sari']];
+ pts.forEach(([l,col,m,b,n])=>{const a=(b-rot)*Math.PI/180;let rr=F*Math.sqrt(m/520);const x=cx+Math.sin(a)*rr,y=cy-Math.cos(a)*rr;
+  if(l=='S'){c.fillStyle='rgba(217,54,54,'+(.25+.15*Math.sin(t*10))+')';c.beginPath();c.arc(x,y,62,0,7);c.fill();}
+  c.globalAlpha=o*(l!='S'&&t>20.5?.45:1);c.fillStyle='#fff';c.beginPath();c.arc(x,y,40,0,7);c.fill();c.fillStyle=col;c.beginPath();c.arc(x,y,35,0,7);c.fill();
+  c.fillStyle='#fff';c.font='800 32px "Plus Jakarta Sans"';c.fillText(l,x,y+1);
+  const tag=n;c.font='600 24px "Plus Jakarta Sans"';const w=c.measureText(tag).width+30;c.fillStyle=l=='S'?'#d93636':'rgba(18,21,24,.85)';c.beginPath();c.roundRect(x-w/2,y+50,w,40,20);c.fill();c.fillStyle='#fff';c.fillText(tag,x,y+71);c.globalAlpha=o;});
+ c.globalAlpha=1;}
+const dist=t=>Math.round(259-(259-12)*io((t-19.6)/2.6));
+
+window.render=function(t){
+ // A
+ const net=t<.5?['4G',4]:t<1?['3G',3]:t<1.4?['E',2]:['',1];$('net').textContent=net[0];[...bars.children].forEach((b,i)=>b.style.background=i<net[1]?'#16211b':'#d5d5d0');
+ show($('status'),t,0,1.95,960,400);show($('nosvc'),t,2.0,2.95,960,400);
+ show($('cap1'),t,.1,1.95,960,560);show($('cap2'),t,2.0,2.95,960,560);
+ show($('cap3'),t,3.0,4.0,960,t<3.45?560:560+ease((t-3.45)/.4)*130,.3,0);
+ // B
+ const so=win(t,3.4,6.45,.3);put($('search'),960,t<3.45?380:380+ease((t-3.45)/.5)*160,so,t<4?back((t-3.4)/.4):1);
+ $('sIcon').style.opacity=t<3.95?1:0;$('wIcon').style.opacity=t<3.95?0:1;
+ [...sr.children].forEach((r,i)=>{const k=((t-4)*.5+i/3)%1;const s=t<4?0:200+k*620;put(r,960,540,so*(1-k)*(t>4?1:0),1);r.style.width=r.style.height=s+'px';});
+ show($('scanTxt'),t,4.05,6.4,960,660);
+ show($('peerB'),t,4.6,6.4,620,400,.3,0);show($('peerS'),t,5.0,6.4,1300,410,.3,0);show($('peerP'),t,5.4,6.4,930,850,.3,0);
+ cursor($('curK'),t,3.5,6.3,[[3.5,1100,520],[3.8,1000,410],[4.4,1000,410],[5.2,1180,760]],[3.85]);
+ // C
+ const go=win(t,6.45,7.55,.3);put($('group'),960,560+(1-ease((t-6.45)/.35))*40,go,1,(1-go)*10);
+ const mo=win(t,6.55,16.0,.3);const mY=t<7.55?620:620-io((t-7.55)/.5)*450;put($('members'),960,mY,mo,t<7.55?1:1-io((t-7.55)/.5)*.15);
+ // D
+ const bo=win(t,7.75,11.65,.3);put($('bar'),960,560+(1-ease((t-7.75)/.3))*40,bo,1,(1-bo)*10);
+ const held=(t>8.05&&t<9.85),budi=(t>10.35&&t<11.6);
+ $('mic').style.transform=`scale(${held?1.12:1})`;$('mic').style.boxShadow=held?'0 0 0 24px rgba(22,150,120,.18)':'';
+ show($('hint'),t,7.8,11.65,960,690);
+ const to=held?win(t,8.05,9.85,.2):budi?win(t,10.35,11.6,.2):0;
+ $('talk').style.background=budi?'var(--brand)':'var(--leaf)';$('talkAv').style.background=budi?'var(--budi)':'var(--kamu)';$('talkAv').textContent=budi?'B':'K';$('talkTxt').textContent=budi?L.budiTalk:L.youTalk;
+ put($('talk'),960,380,to,.85+.15*ease(to),(1-to)*8);
+ [...wave.children].forEach((b,i)=>b.style.height=(14+Math.abs(Math.sin(t*13+i*1.7))*44)+'px');
+ $('mav1').style.boxShadow=budi?'0 0 0 8px rgba(232,89,12,.3)':'';
+ cursor($('curK'),t,7.8,11.6,[[7.8,1300,800],[8.0,1185,575],[9.9,1185,575],[10.3,1400,820]],[8.05]);
+ if(t>=3.5&&t<6.3)cursor($('curK'),t,3.5,6.3,[[3.5,1100,520],[3.8,1000,410],[4.4,1000,410],[5.2,1180,760]],[3.85]);
+ // E
+ show($('ann'),t,11.75,13.95,960,560);const msg=L.msg;const n=Math.floor(cl((t-12.05)/1.3)*msg.length);$('annTxt').textContent=msg.slice(0,n);$('caret').style.opacity=(Math.floor(t*3)%2||n<msg.length)?1:0;
+ if(t>=11.8&&t<13.95)cursor($('curK'),t,11.8,13.95,[[11.8,1250,800],[12.6,1250,700],[13.3,1395,585],[13.95,1395,585]],[13.5]);
+ // F
+ show($('ask'),t,14.0,15.0,960,470);show($('seg'),t,14.05,15.0,960,580);const pick=t>14.55;
+ ['sg0','sg1','sg2'].forEach((id,i)=>{const on=(i==0&&!pick)||(i==1&&pick);$(id).style.background=on?(i==0?'var(--leaf)':'var(--amber)'):'';$(id).style.color=on?'#fff':'';});
+ $('mst2').textContent=(pick&&t<16?L.help:L.safe)+' · 23%';$('mst2').style.color=pick?'#c98a00':'';
+ // G
+ show($('sosBtn'),t,15.0,15.5,960,580,.2);show($('confirm'),t,15.5,16.05,960,600,.2);
+ cursor($('curS'),t,14.05,16.0,[[14.05,600,900],[14.45,975,600],[15.0,975,600],[15.25,975,595],[15.55,1180,700],[15.8,1180,690]],[14.5,15.25,15.8]);
+ // H
+ const ho=win(t,16.05,17.95,.25);put($('sosCard'),960,540,ho,.9+.1*back((t-16.05)/.35),(1-ho)*10);
+ const pulse=((t-16)*1.2)%1;put($('sosring'),960,540,ho*(1-pulse)*.8,1+pulse*.15);
+ $('redblob').style.opacity=win(t,16,22.4,.4);
+ // I
+ const ro=win(t,17.95,22.45,.3);$('radar').style.opacity=ro;$('radar').style.transform=`scale(${.92+.08*ease((t-17.95)/.4)})`;drawRadar(t,ro?1:0);
+ const dd=dist(t);$('dNum').textContent=dd;$('dDir').textContent=t<19.3?L.dir1:L.dir2;$('dDir').style.color=t<19.3?'':'var(--leaf)';
+ show($('dist'),t,18.3,22.45,0,0,.3,0);$('dist').style.transform=`translateY(${(1-ease((t-18.3)/.3))*30}px)`;
+ cursor($('curK'),t,18.4,20.0,[[18.4,1100,800],[18.9,555,385],[19.4,555,385]],[18.95]);
+  // J
+ show($('found'),t,22.5,23.45,960,460);show($('found2'),t,23.45,24.45,960,460,.25,10);
+ const ok=t>23.2;const co=win(t,22.6,24.45,.3);$('cancel').textContent=ok?'✓ '+L.safeBtn:L.cancel;$('cancel').style.background=ok?'var(--leaf)':'var(--sos)';put($('cancel'),960,600,co,t>23.2&&t<23.4?.94:1);
+ if(t>=22.6)cursor($('curS'),t,22.6,24.4,[[22.6,700,900],[23.05,970,610],[23.6,970,610],[24.2,1050,950]],[23.15]);
+ // K
+ const ko=win(t,24.45,28.1,.3);nodes.forEach((nd,i)=>{const p=ease((t-24.55-i*.03)/.5);put(nd.el,960+(nd.x-960)*p,540+(nd.y-540)*p,ko*p);});
+ $('lines').style.opacity=ko*ease((t-24.7)/.5);$('lines').style.strokeDashoffset=0;[...$('lines').children].forEach(l=>l.setAttribute('stroke-dashoffset',-t*40));
+ const tags=[[24.45,L.safeBtn,'var(--leaf)','#fff'],[25.0,L.tags[0],'#fff','var(--ink)'],[25.5,L.tags[1],'var(--ink)','#fff'],[26.0,L.tags[2],'#fff4d6','var(--ink)'],[26.5,L.tags[3],'var(--dark)','#fff'],[27.0,L.tags[4],'var(--leaf)','#fff']];
+ let cur=tags[0];tags.forEach(g=>{if(t>=g[0])cur=g;});$('tagline').textContent=(cur==tags[0]?'✓ ':'')+cur[1];$('tagline').style.background=cur[2];$('tagline').style.color=cur[3];
+ const pop=back((t-cur[0])/.25);put($('tagline'),960,540,win(t,24.45,28.0,.2),(cur==tags[0]?.7:.9)+.1*pop);
+ // L
+ const wp=io((t-27.95)/.45);$('wipe').style.width=$('wipe').style.height=(wp*2400)+'px';put($('wipe'),960,540,t>27.95&&t<28.55?1:t>=28.55?1-ease((t-28.55)/.3):0);
+ const eo=t>=28.4?1:0;$('end').style.opacity=eo;
+ $('logo').style.opacity=ease((t-28.45)/.4);$('logo').style.transform=`scale(${.6+.4*back((t-28.45)/.5)})`;
+ [['wm',28.75],['tl',29.1],['cta',29.45]].forEach(([id,a])=>{const e=$(id),p=ease((t-a)/.4);e.style.opacity=p;e.style.transform=`translateY(${(1-p)*24}px)`;e.style.filter=p<1?`blur(${(1-p)*8}px)`:'';});
+ if(t>=29.7){cursor($('curK'),t,29.7,32.5,[[29.7,1300,1000],[30.3,1080,750],[31.0,1140,960],[32,1150,955]],[30.35]);cursor($('curS'),t,29.9,32.5,[[29.9,1500,500],[30.6,1200,470],[32,1220,480]],[]);}
+ else if(!(t>=22.6)&&!(t>=14.05&&t<16.05)) $('curS').style.opacity=0;
+ if(!((t>=3.5&&t<6.3)||(t>=7.8&&t<11.6)||(t>=11.8&&t<13.95)||(t>=18.4&&t<20)||t>=29.7))$('curK').style.opacity=0;
+ if(t>=24.4&&t<29.9)$('curS').style.opacity=0;
+};
+// ---- Vigenco film contract: seek(t), FILM (duration, bpm, sections, sound cues), READY.
+const cues=[];const cue=(t,k,x)=>cues.push(Object.assign({t,k},x||{}));
+cue(.1,'born');cue(2.0,'whoosh',{v:.6});cue(3.0,'pop',{n:0});cue(3.85,'click');
+cue(4.6,'pop',{n:1});cue(5.0,'pop',{n:2});cue(5.4,'pop',{n:3});
+cue(6.45,'whoosh',{v:.7});cue(6.6,'check');cue(7.75,'swap',{n:1});cue(8.05,'click');cue(10.35,'note',{n:4});
+cue(11.75,'whoosh',{v:.7});
+for(let i=0;i<L.msg.length;i++){if(L.msg[i]!==' ')cue(+(12.05+1.3*(i+1)/L.msg.length).toFixed(3),'key',{n:i});}
+cue(13.5,'click');cue(14.0,'swap',{n:2});cue(14.5,'toggle');cue(15.25,'click');cue(15.8,'click');
+cue(16.05,'alert');cue(16.6,'alert');cue(17.95,'whoosh',{v:.8});cue(18.95,'click');
+cue(19.6,'riser',{d:2.6});cue(22.5,'check');cue(23.15,'click');cue(23.45,'settle');
+cue(24.45,'drop');[25.0,25.5,26.0,26.5,27.0].forEach((t,i)=>cue(t,'slam',{n:i}));
+cue(27.95,'whoosh');cue(28.45,'shimmer');cue(28.75,'pop',{n:1});cue(29.45,'pop',{n:2});cue(30.35,'cta');
+window.seek=t=>window.render(t);
+window.FILM={type:'custom',width:1920,height:1080,bpm:120,duration:32,
+  sections:{intro:[0,3],features:[6.45,16],drop:[24.45,28],outro:[28,32]},cues:cues.sort((a,b)=>a.t-b.t)};
+render(0);
+(document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{const im=$('logo');return im.complete?0:new Promise(r=>{im.onload=im.onerror=r;});}).then(()=>{render(0);window.READY=true;});
+</script></body></html>
