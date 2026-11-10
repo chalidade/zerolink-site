@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZeroLink من PUAS · تطبيق اتصال للطوارئ بلا إشارة ولا إنترنت</title>
+<meta name="description" content="ZeroLink: تطبيق أندرويد مجاني للمكالمات واللاسلكي والدردشة والصور والخرائط دون اتصال ونداء الاستغاثة SOS بين الهواتف، بلا إنترنت وبلا إشارة. للكوارث والتخييم والرحلات في الطبيعة.">
+<link rel="canonical" href="https://zerolink.web.id/ar/">
+<link rel="alternate" hreflang="id" href="https://zerolink.web.id/">
+<link rel="alternate" hreflang="en" href="https://zerolink.web.id/en/">
+<link rel="alternate" hreflang="ar" href="https://zerolink.web.id/ar/">
+<link rel="alternate" hreflang="x-default" href="https://zerolink.web.id/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="PUAS">
+<!-- Google Search Console: tempel kode verifikasi di content, lalu hapus komentar ini. -->
+<!-- <meta name="google-site-verification" content=""> -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ZeroLink",
+  "alternateName": "SalingJaga",
+  "description": "تطبيق اتصال للطوارئ يعمل دون إنترنت على أندرويد: مكالمات ولاسلكي ودردشة وصور وفيديو وخرائط دون اتصال وبوصلة ونداء استغاثة عبر Wi-Fi Direct، بلا إنترنت وبلا إشارة.",
+  "url": "https://zerolink.web.id/ar/",
+  "downloadUrl": "/zerolink.apk",
+  "image": "https://zerolink.web.id/og.jpg",
+  "screenshot": "https://saling-jaga.com/screenshots/2-grup-dan-chat.png",
+  "applicationCategory": "CommunicationApplication",
+  "operatingSystem": "Android 6.0+",
+  "inLanguage": "ar",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+  "author": { "@type": "Person", "name": "Chalid Ade Rahman", "url": "https://github.com/chalidade" }
+}
+</script>
+<meta property="og:title" content="ZeroLink">
+<meta property="og:description" content="مكالمات ولاسلكي ودردشة ونداء استغاثة بين هواتف أندرويد، بلا إنترنت وبلا إشارة.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZeroLink">
+<meta property="og:url" content="https://zerolink.web.id/ar/">
+<meta property="og:image" content="https://zerolink.web.id/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ZeroLink: ابقوا على تواصل حين تنقطع الإشارة">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZeroLink">
+<meta name="twitter:description" content="مكالمات ولاسلكي ودردشة ونداء استغاثة بين هواتف أندرويد، بلا إنترنت وبلا إشارة.">
+<meta name="twitter:image" content="https://zerolink.web.id/og.jpg">
+<meta name="theme-color" content="#04201c">
+<link rel="icon" href="../brand/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<script>
+  // Statistik pengunjung ramah privasi (GoatCounter): tanpa cookie, tanpa data pribadi.
+  // Kosong = mati. Isi dengan kode akun, misal "salingjaga" untuk salingjaga.goatcounter.com.
+  var GOATCOUNTER = '';
+  if (GOATCOUNTER) {
+    var gc = document.createElement('script');
+    gc.async = true;
+    gc.src = 'https://gc.zgo.at/count.js';
+    gc.setAttribute('data-goatcounter', 'https://' + GOATCOUNTER + '.goatcounter.com/count');
+    document.head.appendChild(gc);
+  }
+  // Waitlist: empty = the buttons open an email. Set the /exec URL from tools/waitlist/Code.gs to use the form.
+  var WAITLIST_ENDPOINT = '';
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('daftar');
+    if (!WAITLIST_ENDPOINT || !form || !window.fetch) return;
+    form.hidden = false;
+    document.querySelectorAll('[data-waitlist]').forEach(function (a) {
+      a.href = '#daftar';
+      a.addEventListener('click', function () {
+        var box = form.querySelector('[name="' + a.getAttribute('data-waitlist') + '"]');
+        if (box) box.checked = true;
+      });
+    });
+    var status = form.querySelector('.status'), button = form.querySelector('button');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.nama.value.trim() || !form.kontak.value.trim()) { status.textContent = 'يرجى كتابة الاسم ووسيلة التواصل.'; return; }
+      button.disabled = true;
+      status.textContent = 'جارٍ الإرسال…';
+      fetch(WAITLIST_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(new FormData(form)) })
+        .then(function () { form.reset(); status.textContent = 'شكرًا، تمت إضافتك إلى القائمة. سنخبرك حين يصبح جاهزًا.'; })
+        .catch(function () { status.textContent = 'تعذّر الإرسال. حاول مجددًا أو راسلنا على info.salingjaga@gmail.com.'; })
+        .then(function () { button.disabled = false; });
+    });
+  });
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-nosignal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20v-2M9 20v-5M14 20v-8M19 20V7" opacity=".45"/><path d="m3 3 18 18"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22V3"/><path d="M5 4h13l-2.5 4.5L18 13H5"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.3 7.6L3 21l1.4-5.4A8.5 8.5 0 1 1 21 12z"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/><path d="M3.5 12H8l1.5-2.5 2.5 5 2-3.5h6.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v15H6.5A2.5 2.5 0 0 0 4 20.5 2.5 2.5 0 0 0 6.5 23H20"/><path d="M12 7v6M9 10h6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="11" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-userx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/><path d="m17 8 5 5M22 8l-5 5"/></symbol>
+  </defs>
+</svg>
+
+<div class="nav-shell">
+  <div class="wrap">
+    <nav class="nav" aria-label="القائمة الرئيسية">
+      <a class="brand" href="#top"><img src="../brand/mark.png" alt="" width="34" height="34"><span>ZeroLink <small style="font-weight:600;opacity:.7">من PUAS</small></span></a>
+      <div class="nav-links">
+        <a class="opt" href="#story">القصة</a>
+        <a class="opt" href="#features">المزايا</a>
+        <a class="opt" href="#install">التثبيت</a>
+        <a class="opt" href="#security">الأمان</a>
+        <a class="opt" href="laptop/">الحاسوب</a>
+        <div class="lang" aria-label="اللغة"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en">EN</a><span aria-current="page">AR</span></div>
+        <a class="btn btn-primary btn-sm" href="/zerolink.apk" data-goatcounter-click="unduh-apk-1" data-goatcounter-title="Download APK"><svg aria-hidden="true"><use href="#i-download"/></svg>تنزيل</a>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="chip"><span class="dot"></span>لا إشارة · 4 هواتف متصلة</span>
+      <h1>حين تنقطع الإشارة، نبقى <span class="serif">على تواصل.</span></h1>
+      <p class="lede">تحدّث وراسل وشارك موقعك وأرسل نداء استغاثة بين هواتف أندرويد مباشرةً عبر Wi‑Fi Direct. بلا إنترنت، بلا رصيد، وبلا أبراج اتصال.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/zerolink.apk" data-goatcounter-click="unduh-apk-2" data-goatcounter-title="Download APK"><svg aria-hidden="true"><use href="#i-download"/></svg>نزّل APK مجانًا</a>
+        <a class="btn btn-ghost" href="#video"><svg aria-hidden="true"><use href="#i-play"/></svg>شاهد 32 ثانية</a>
+      </div>
+      <ul class="checks">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>بلا حساب</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>بلا خادم</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>بلا إعلانات</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>أندرويد 6.0 فأحدث</li>
+      </ul>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="rings"><i></i><i></i><i></i></div>
+      <svg class="links" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M18 16 Q34 30 50 50" vector-effect="non-scaling-stroke"/>
+        <path class="hot" d="M84 46 Q66 44 50 50" vector-effect="non-scaling-stroke"/>
+        <path d="M22 88 Q34 70 50 50" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <div class="phone"><img src="../screenshots/3-sos-masuk.png" alt="" width="1179" height="2556" fetchpriority="high"></div>
+      <span class="chip signal"><svg><use href="#i-nosignal"/></svg>0 إشارة</span>
+      <div class="peer p-budi"><span class="av">B</span><span><b>Budi</b><small>252 م · شمالًا</small></span></div>
+      <div class="peer p-sari sos"><span class="av">S</span><span><b>Sari</b><small>SOS · 259 م شمال غرب</small></span></div>
+      <div class="peer p-rt"><span class="av">ر</span><span><b>رئيس الحي</b><small>470 م · جنوب شرق</small></span></div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <ul>
+      <li>بلا إنترنت</li><li>بلا رصيد</li><li>بلا أبراج اتصال</li><li>Wi‑Fi Direct</li><li>تشفير AES‑256‑GCM</li><li>بلا حساب</li><li>بوابة Meshtastic LoRa</li><li>واجهة التطبيق بالإنجليزية والإندونيسية</li>
+      <li>بلا إنترنت</li><li>بلا رصيد</li><li>بلا أبراج اتصال</li><li>Wi‑Fi Direct</li><li>تشفير AES‑256‑GCM</li><li>بلا حساب</li><li>بوابة Meshtastic LoRa</li><li>واجهة التطبيق بالإنجليزية والإندونيسية</li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <section class="sec" id="story">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">ليلة واحدة بلا إشارة</p>
+        <h2>هكذا يبدو الأمر حين <span class="serif">تنطفئ الأبراج.</span></h2>
+      </div>
+      <div class="story">
+        <ol class="beats">
+          <li class="beat on">
+            <time>17:58</time>
+            <h3>تنقطع الكهرباء وتختفي الإشارة.</h3>
+            <p>تصمت مجموعة الدردشة، لكن الهواتف ما زالت تعمل. افتح ZeroLink واضغط بحث، فتظهر هواتف الجيران خلال ثوانٍ مباشرةً عبر Wi‑Fi Direct.</p>
+            <img class="shot" src="../screenshots/1-cari-perangkat.png" alt="قائمة الهواتف القريبة الجاهزة للاتصال" loading="lazy" width="1179" height="2556">
+          </li>
+          <li class="beat">
+            <time>18:01</time>
+            <h3>يضغط Budi الزر، فيسمعه الجميع.</h3>
+            <p>لاسلكي للمجموعة كلها، أو دردشة حين يعلو الضجيج. تنتقل الرسائل من هاتف إلى هاتف دون أي خادم في المنتصف.</p>
+            <img class="shot" src="../screenshots/2-grup-dan-chat.png" alt="مجموعة من أربعة أشخاص، Budi يتحدث" loading="lazy" width="1179" height="2556">
+          </li>
+          <li class="beat">
+            <time>18:02</time>
+            <h3>رئيس الحي يغيّر نقطة التجمع.</h3>
+            <p>إعلان واحد يظهر أعلى كل دردشة: النقطة 3، على بعد 250 م شمال شرق. كل هاتف يعرف الاتجاه والمسافة.</p>
+            <img class="shot" src="../screenshots/23-titik-kumpul.png" alt="إعلان نقطة التجمع: النقطة 3، 250 م شمال شرق" loading="lazy" width="1179" height="2556">
+          </li>
+          <li class="beat sos">
+            <time>18:04</time>
+            <h3>Sari ترسل نداء استغاثة.</h3>
+            <p>يرنّ إنذار على كل هاتف، مع مسافتها واتجاهها وبطاريتها: 259 م شمال غرب، و21% متبقية.</p>
+            <img class="shot" src="../screenshots/3-sos-masuk.png" alt="نداء استغاثة وارد من Sari، 259 م شمال غرب" loading="lazy" width="1179" height="2556">
+          </li>
+          <li class="beat">
+            <time>18:20</time>
+            <h3>من لم يصل بعد، يظهر.</h3>
+            <p>تعرض البوصلة كل الأعضاء ونقطة التجمع: من وصل، ومن ما زال في الطريق.</p>
+            <img class="shot" src="../screenshots/24-titik-kumpul-di-kompas.png" alt="بوصلة تعرض مواقع الأعضاء ونقطة التجمع" loading="lazy" width="1179" height="2556">
+          </li>
+        </ol>
+        <div class="story-phone" aria-hidden="true">
+          <div class="phone">
+            <img class="on" src="../screenshots/1-cari-perangkat.png" alt="" loading="lazy">
+            <img src="../screenshots/2-grup-dan-chat.png" alt="" loading="lazy">
+            <img src="../screenshots/23-titik-kumpul.png" alt="" loading="lazy">
+            <img src="../screenshots/3-sos-masuk.png" alt="" loading="lazy">
+            <img src="../screenshots/24-titik-kumpul-di-kompas.png" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="features">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">المزايا</p>
+        <h2>كل ما تحتاجه المجموعة حين <span class="serif">تغيب الإشارة.</span></h2>
+      </div>
+      <div class="bento">
+        <div class="tile wide rise"><span class="ic"><svg aria-hidden="true"><use href="#i-mic"/></svg></span><h3>لاسلكي ومكالمات</h3><p>اضغط مطوّلًا لتتحدث إلى المجموعة كلها، أو انتقل إلى مكالمة ثنائية.</p></div>
+        <div class="tile wide red rise"><span class="ic"><svg aria-hidden="true"><use href="#i-alert"/></svg></span><h3>استغاثة مع الاتجاه</h3><p>إنذار على كل هاتف مع المسافة والاتجاه إلى المرسل. ويمكن إطلاقه بالضغط على زر الصوت 5 مرات.</p></div>
+        <div class="tile rise"><span class="ic"><svg aria-hidden="true"><use href="#i-compass"/></svg></span><h3>بوصلة وخريطة دون اتصال</h3><p>رادار لكل الأعضاء، وسهم كبير نحو من يحتاج المساعدة. اضغط على اسم ليرشدك إليه، دون حاجة إلى الإنترنت.</p></div>
+        <div class="tile rise"><span class="ic"><svg aria-hidden="true"><use href="#i-flag"/></svg></span><h3>نقطة التجمع</h3><p>حدّد مكانًا للتجمع وشاهد من وصل.</p></div>
+        <div class="tile rise"><span class="ic"><svg aria-hidden="true"><use href="#i-chat"/></svg></span><h3>دردشة وصور ورسائل خاصة</h3><p>للمجموعة أو لشخص واحد، مع تشفير من طرف إلى طرف.</p></div>
+        <div class="tile wide lamp rise"><span class="ic"><svg aria-hidden="true"><use href="#i-pulse"/></svg></span><h3>صفارة وبطاقة طبية</h3><p>صفارة ومصباح ليسهل العثور عليك، ومعلومات طبية تُرسل مع نداء الاستغاثة إلى فرق الإنقاذ.</p></div>
+        <div class="tile wide rise"><span class="ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><h3>دليل الكوارث والإسعافات الأولية</h3><p>الزلازل والفيضانات والانهيارات الأرضية والإنعاش القلبي الرئوي والحروق وغيرها. محفوظ على الهاتف ويُقرأ دون إنترنت.</p></div>
+      </div>
+      <ul class="also rise" aria-label="مزايا أخرى">
+        <li>رسائل صوتية</li><li>حفظ سجل الدردشة</li><li>تفقّد الحضور</li><li>وضع مبسّط لكبار السن</li><li>البحث عن أفراد العائلة المفقودين</li><li>إعلانات</li><li>حالة الأعضاء والبطارية</li><li>توفير البطارية</li><li>استغاثة + رسالة SMS</li><li>إعادة الانضمام تلقائيًا</li><li>واجهة بالإنجليزية والإندونيسية</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="range">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">المدى</p>
+        <h2>من شارع واحد <span class="serif">إلى وادٍ كامل.</span></h2>
+        <p class="lede">يبدأ الأمر بهاتفين فقط. وحين تتوزع المجموعة، يتّسع المدى خطوة بعد خطوة.</p>
+      </div>
+      <div class="range">
+        <div class="rung rise"><div class="km">50–100<small>م</small></div><div class="bar"><i style="width:8%"></i></div><h3>من هاتف إلى هاتف</h3><p>اتصال Wi‑Fi Direct مباشر في الأماكن المفتوحة، وأقصر داخل المباني.</p></div>
+        <div class="rung rise"><div class="km">+1<small>هاتف</small></div><div class="bar"><i style="width:18%"></i></div><h3>هاتف جسر</h3><p>هاتف في المنتصف ينقل الرسائل إلى من هم خارج المدى.</p></div>
+        <div class="rung rise"><div class="km">1–3<small>كم</small></div><div class="bar"><i style="width:55%"></i></div><h3>Wi‑Fi نقطة القيادة</h3><p>شبكة Wi‑Fi المبنى، أو هوائي بعيد المدى في النقطة، مع أداة تساعد على توجيه الهوائي.</p></div>
+        <div class="rung rise"><div class="km">km+<small>LoRa</small></div><div class="bar"><i style="width:100%"></i></div><h3>بوابة LoRa</h3><p>جهاز Meshtastic ينقل الرسائل ونداءات الاستغاثة بين المجموعات لمسافة عدة كيلومترات.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="video">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">فيديو</p>
+        <h2>شاهد كيف يعمل خلال <span class="serif">32 ثانية.</span></h2>
+      </div>
+      <div class="film rise">
+        <video controls playsinline preload="none" poster="../media/launch-poster.jpg" aria-label="فيديو تعريفي بـ ZeroLink: البحث عن الأجهزة واللاسلكي والإعلانات والحالة والاستغاثة والبوصلة دون إشارة">
+          <source src="../media/saling-jaga-launch.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="install">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">التثبيت</p>
+        <h2>ثبّته الآن، <span class="serif">قبل أن تحتاجه.</span></h2>
+      </div>
+      <div class="install">
+        <div class="rise">
+          <ol class="steps">
+            <li><span><b>نزّل ملف APK</b>من هذه الصفحة على هاتف أندرويد.</span></li>
+            <li><span><b>افتح الملف</b>واسمح بالتثبيت من هذا المصدر. تحذير أندرويد أمر طبيعي.</span></li>
+            <li><span><b>شغّل Wi‑Fi والموقع</b>اضغط بحث، ثم اتصل بهاتف صديقك.</span></li>
+          </ol>
+          <p class="fine">غير متوفر على متجر Play بعد. ولأصدقائك الذين لا يملكون إنترنت، أرسل ملف APK عبر Quick Share أو البلوتوث.</p>
+          <p class="fine">تستخدم حاسوبًا محمولًا أو Mac أو iPhone؟ انضم إلى المجموعة من المتصفح دون إنترنت: <a href="laptop/">دليل الحاسوب والمتصفح</a>.</p>
+          <div class="actions" style="margin-top:28px">
+            <a class="btn btn-primary" href="/zerolink.apk" data-goatcounter-click="unduh-apk-3" data-goatcounter-title="Download APK"><svg aria-hidden="true"><use href="#i-download"/></svg>نزّل APK مجانًا</a>
+          </div>
+          <details class="disclose">
+            <summary>دليل التثبيت المصوَّر</summary>
+            <ol class="shots">
+              <li><img src="../install/1-buka-setelan.jpg" alt="نافذة Chrome: الهاتف لا يسمح بعد بتثبيت التطبيقات من هذا المصدر" loading="lazy" width="360" height="800"><span>اضغط <b>الإعدادات</b></span></li>
+              <li><img src="../install/2-izinkan-sumber.jpg" alt="إعداد تثبيت التطبيقات غير المعروفة لـ Chrome" loading="lazy" width="360" height="800"><span>اسمح بهذا المصدر</span></li>
+              <li><img src="../install/3-instal.jpg" alt="نافذة: هل تريد تثبيت هذا التطبيق؟ ZeroLink" loading="lazy" width="360" height="800"><span>اضغط <b>تثبيت</b></span></li>
+              <li><img src="../install/4-scan-play-protect.jpg" alt="Google Play Protect: يُنصح بفحص التطبيق" loading="lazy" width="360" height="800"><span>اختر <b>فحص التطبيق</b></span></li>
+              <li><img src="../install/5-aman-instal.jpg" alt="Google Play Protect: يبدو هذا التطبيق آمنًا" loading="lazy" width="360" height="800"><span>«يبدو آمنًا»</span></li>
+              <li><img src="../install/6-terpasang.jpg" alt="نافذة: تم تثبيت التطبيق" loading="lazy" width="360" height="800"><span>اضغط <b>فتح</b></span></li>
+            </ol>
+          </details>
+        </div>
+        <figure class="howto rise">
+          <video controls playsinline preload="none" poster="../media/cara-instal-poster.jpg" width="720" height="1280" aria-label="فيديو: كيفية تثبيت ZeroLink">
+            <source src="../media/saling-jaga-cara-instal.mp4" type="video/mp4">
+          </video>
+          <figcaption>التثبيت في 40 ثانية: افتح الملف، واسمح بهذا المصدر، ثم <b>تثبيت</b>، ثم <b>فحص التطبيق</b> حتى يظهر «يبدو آمنًا»، ثم <b>فتح</b>. (الفيديو بواجهة إندونيسية.)</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="news">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">قريبًا</p>
+        <h2>تستخدم iPhone، أو تفضّل <span class="serif">التثبيت من متجر Play؟</span></h2>
+      </div>
+      <div class="notify">
+        <div class="rise">
+          <svg aria-hidden="true"><use href="#i-phone"/></svg>
+          <h3>نسخة iPhone</h3>
+          <p>التطبيق جاهز وينضم إلى المجموعات نفسها مع هواتف أندرويد، لكن لا يمكن تثبيته بعد: ما زلنا نجهّز حساب Apple Developer، ثم نفتح نسخة تجريبية عبر TestFlight. سجّل لتنضم إلى التجربة أو لتعرف موعد الإطلاق.</p>
+          <a class="btn btn-primary" data-waitlist="iphone" data-goatcounter-click="notify-iphone" data-goatcounter-title="Notify me: iPhone" href="mailto:info.salingjaga@gmail.com?subject=Notify%20me%3A%20ZeroLink%20for%20iPhone&amp;body=Hi%2C%20please%20let%20me%20know%20when%20ZeroLink%20can%20be%20installed%20on%20iPhone.%0A%0AName%3A%0ACity%3A%0AJoin%20the%20TestFlight%20beta%20(yes%2Fno)%3A"><svg aria-hidden="true"><use href="#i-bell"/></svg>أبلغني</a>
+        </div>
+        <div class="rise">
+          <svg aria-hidden="true"><use href="#i-download"/></svg>
+          <h3>متجر Google Play</h3>
+          <p>قريبًا على متجر Play، فلا حاجة إلى السماح بالتثبيت من مصادر أخرى وتصل التحديثات تلقائيًا. حتى ذلك الحين، ملف APK في هذه الصفحة هو التطبيق نفسه.</p>
+          <a class="btn btn-ghost" data-waitlist="playstore" data-goatcounter-click="notify-playstore" data-goatcounter-title="Notify me: Play Store" href="mailto:info.salingjaga@gmail.com?subject=Notify%20me%3A%20ZeroLink%20on%20Play%20Store&amp;body=Hi%2C%20please%20let%20me%20know%20when%20ZeroLink%20is%20on%20Play%20Store.%0A%0AName%3A%0ACity%3A"><svg aria-hidden="true"><use href="#i-bell"/></svg>أبلغني عند الإطلاق</a>
+        </div>
+      </div>
+      <p class="fine">تُستخدم وسيلة تواصلك لهذه الأخبار فقط ولا تُشارك مع أحد.</p>
+      <form class="waitlist rise" id="daftar" hidden novalidate>
+        <h3>سجّل لتصلك الأخبار</h3>
+        <div class="fields">
+          <label>الاسم أو اللقب<input name="nama" maxlength="60" autocomplete="nickname" required></label>
+          <label>أي وسيلة تواصل تناسبك<input name="kontak" maxlength="100" autocomplete="off" placeholder="حساب Threads/IG أو بريد إلكتروني أو واتساب" required></label>
+          <label>المدينة (اختياري)<input name="kota" maxlength="60" autocomplete="address-level2"></label>
+        </div>
+        <fieldset>
+          <legend>أبلغني عن</legend>
+          <label class="check"><input type="checkbox" name="iphone" value="1">نسخة iPhone</label>
+          <label class="check"><input type="checkbox" name="playstore" value="1">متجر Play</label>
+        </fieldset>
+        <label class="check"><input type="checkbox" name="beta" value="1">أريد الانضمام إلى النسخة التجريبية لـ iPhone (TestFlight). سنرسل الرابط إلى وسيلة التواصل أعلاه.</label>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="lang" value="ar">
+        <div class="send"><button class="btn btn-primary" type="submit" data-goatcounter-click="daftar-tunggu">تسجيل</button><p class="status" role="status" aria-live="polite"></p></div>
+        <p class="fine">تُستخدم وسيلة تواصلك لهذه الأخبار فقط ولا تُشارك مع أحد. راجع <a href="../privacy.html">سياسة الخصوصية</a>.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" id="security">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <p class="eyebrow">الأمان</p>
+        <h2>آمن للتثبيت، <span class="serif">حتى من خارج متجر Play.</span></h2>
+      </div>
+      <div class="trust">
+        <div class="rise"><svg aria-hidden="true"><use href="#i-shield"/></svg><h3>يجتاز Play Protect</h3><p>تفحصه Google عند التثبيت: آمن. بلا إعلانات أو تحليلات أو أدوات تتبّع.</p></div>
+        <div class="rise"><svg aria-hidden="true"><use href="#i-hash"/></svg><h3>تنزيل يمكن التحقق منه</h3><p>كل ملف APK يأتي مع بصمة <a href="/zerolink.apk.sha256">SHA-256</a> لتطابقها مع ما نزّلته.</p></div>
+        <div class="rise"><svg aria-hidden="true"><use href="#i-lock"/></svg><h3>البيانات تبقى داخل المجموعة</h3><p>بلا خادم وبلا حساب. تشفير AES‑256‑GCM بين الهواتف.</p></div>
+        <div class="rise"><svg aria-hidden="true"><use href="#i-userx"/></svg><h3>لا انتحال للهوية</h3><p>تُرفض الرسائل التي تدّعي أنها من عضو آخر.</p></div>
+      </div>
+      <details class="disclose">
+        <summary>ما الأذونات التي يطلبها؟</summary>
+        <table>
+          <tr><td>الموقع / الأجهزة القريبة</td><td>يتطلبه Wi‑Fi Direct، ويُستخدم أيضًا للبوصلة ومسافة الاستغاثة</td></tr>
+          <tr><td>الميكروفون</td><td>فقط أثناء الضغط على زر التحدث أو خلال مكالمة</td></tr>
+          <tr><td>الإشعارات</td><td>الاستغاثة والرسائل والشاشة مطفأة</td></tr>
+          <tr><td>لا يطلبها</td><td>جهات الاتصال، الرسائل النصية، المعرض كاملًا، سجل المكالمات</td></tr>
+        </table>
+      </details>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="wrap faq">
+      <div class="rise">
+        <p class="eyebrow">أسئلة شائعة</p>
+        <h2>أسئلة <span class="serif">يطرحها الناس كثيرًا.</span></h2>
+      </div>
+      <div class="rise">
+        <details>
+          <summary>حقًا بلا إنترنت ولا رصيد؟</summary>
+          <p>حقًا. لا يحتاج الهاتف حتى إلى شريحة SIM. يكفي تشغيل Wi‑Fi والموقع. يُستخدم الإنترنت فقط لتنزيل ملف APK، وخريطة منطقتك إن رغبت.</p>
+        </details>
+        <details>
+          <summary>ما المدى الذي يصل إليه؟</summary>
+          <p>نحو 50–100 م في الأماكن المفتوحة، وأقل داخل المباني. ولمدى أبعد: هاتف جسر في المنتصف، أو Wi‑Fi نقطة القيادة مع هوائي بعيد المدى (1–3 كم)، أو جهاز Meshtastic LoRa للرسائل ونداءات الاستغاثة بين المجموعات لعدة كيلومترات.</p>
+        </details>
+        <details>
+          <summary>كيف أحدّث التطبيق؟</summary>
+          <p>نزّل أحدث ملف APK وثبّته فوق النسخة القديمة. يبقى اسمك وصورتك وإعداداتك كما هي.</p>
+        </details>
+        <details>
+          <summary>هل يمكنني استخدامه من حاسوب أو Mac أو متصفح؟</summary>
+          <p>نعم. ينضم حاسوب يعمل بنظام Windows أو Mac أو Linux، أو iPhone، أو جهاز لوحي إلى المجموعة من المتصفح دون إنترنت، إما عبر هاتف أندرويد يفتح مجموعته للمتصفحات أو عبر تطبيق الحاسوب المحمول. <a href="laptop/">الدليل والتنزيلات</a>.</p>
+        </details>
+        <details>
+          <summary>هل توجد نسخة لـ iPhone؟</summary>
+          <p>جاهزة، لكن لا يمكن تثبيتها بعد. ما زلنا نجهّز حساب Apple Developer، ثم نفتح نسخة تجريبية عبر TestFlight. على iPhone تتصل المجموعات بوضع Wi‑Fi النقطة: هاتف واحد ينشئ المجموعة، والبقية ينضمون برمز من 6 أرقام على شبكة Wi‑Fi أو نقطة الاتصال نفسها. <a href="#news">سجّل لتعرف أولًا</a>.</p>
+        </details>
+        <details>
+          <summary>متى يصبح متوفرًا على متجر Play؟</summary>
+          <p>قريبًا. حتى ذلك الحين، ثبّت ملف APK من هذه الصفحة. وحين تصدر نسخة متجر Play يمكنك الانتقال إليها دون أن تفقد اسمك وإعداداتك. <a href="#news">أبلغني عند الإطلاق</a>.</p>
+        </details>
+        <details>
+          <summary>هاتفي لا يجد المجموعة. لماذا؟</summary>
+          <p>تأكد أن Wi‑Fi والموقع يعملان على الهاتفين، وأن إذن الموقع / الأجهزة القريبة ممنوح، وأن المسافة بينهما 50–100 م. بعض الهواتف تحتاج إلى بقاء الشاشة مضاءة أثناء البحث. وإن استمرت المشكلة، بدّلا الأدوار: دع الهاتف الذي كان يبحث ينشئ المجموعة.</p>
+        </details>
+        <details>
+          <summary>هل هو مجاني؟</summary>
+          <p>مجاني للجميع وإلى الأبد، وبلا إعلانات. ولفرق البحث والإنقاذ ومراكز الإغاثة والمؤسسات التي تحتاج إلى تدريب أو تخصيص، <a href="mailto:info.salingjaga@gmail.com?subject=ZeroLink%20-%20Partnership">تواصل معنا</a>.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="end rise">
+      <img src="../brand/mark.png" alt="" width="96" height="96">
+      <h2>لا يفيد إلا إذا كانت الهواتف من حولك <span class="serif">تملكه أيضًا.</span></h2>
+      <p>ثبّته اليوم، ثم شاركه مع عائلتك وجيرانك ومجموعتك.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/zerolink.apk" data-goatcounter-click="unduh-apk-4" data-goatcounter-title="Download APK"><svg aria-hidden="true"><use href="#i-download"/></svg>نزّل APK مجانًا</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="../brand/mark.png" alt="" width="28" height="28"><span>ZeroLink <small style="font-weight:600;opacity:.7">من PUAS</small></span></a>
+    <nav aria-label="التذييل">
+      <a id="form-link" href="#" hidden data-goatcounter-click="form-masukan">قيّم التطبيق</a>
+      <a href="mailto:info.salingjaga@gmail.com?subject=ZeroLink%20-%20Problem" data-goatcounter-click="lapor-masalah">الإبلاغ عن مشكلة</a>
+      <a href="mailto:info.salingjaga@gmail.com?subject=ZeroLink%20-%20Feature%20idea" data-goatcounter-click="usul-fitur">اقترح ميزة</a>
+      <a href="../privacy.html">الخصوصية</a>
+      <a href="../terms.html">الشروط</a>
+      <span>© 2026 PUAS · ZeroLink مبني على تطبيق Saling Jaga مفتوح المصدر</span>
+    </nav>
+  </div>
+</footer>
+<script src="../site.js"></script>
+</body>
+</html>

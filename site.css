@@ -402,3 +402,31 @@ footer nav a:hover { color: var(--cream); }
 .os details > ol, .os details > ul { color: var(--muted); margin: 0 0 24px; padding-left: 22px; max-width: 760px; }
 .os details li { margin: 0 0 8px; }
 code, kbd { font: 500 .92em var(--mono); background: rgba(242, 237, 213, .07); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; color: var(--cream); }
+
+/* ---------- Arabic (right-to-left) ---------- */
+[dir="rtl"] body { font-family: "IBM Plex Sans Arabic", var(--sans); }
+[dir="rtl"] .btn, [dir="rtl"] summary { font-family: "IBM Plex Sans Arabic", var(--sans); }
+[dir="rtl"] * { letter-spacing: 0 !important; }
+[dir="rtl"] .eyebrow, [dir="rtl"] .ways .tag { font-family: "IBM Plex Sans Arabic", var(--sans); text-transform: none; font-size: 14px; }
+[dir="rtl"] .chip, [dir="rtl"] .ticker ul { font-family: "IBM Plex Sans Arabic", var(--sans); }
+[dir="rtl"] .serif { font-family: "Amiri", var(--serif); font-style: normal; font-weight: 700; }
+[dir="rtl"] h1, [dir="rtl"] h2 { line-height: 1.3; }
+[dir="rtl"] .hero h1 .serif, [dir="rtl"] .page-hero h1 .serif { padding-right: 0; padding-left: .06em; }
+[dir="rtl"] .rung .km small { font-family: "IBM Plex Sans Arabic", var(--sans); margin-left: 0; margin-right: 6px; }
+[dir="rtl"] .rung .km { direction: ltr; text-align: right; }
+[dir="rtl"] .lang, [dir="rtl"] code { direction: ltr; }
+[dir="rtl"] .beat time { text-align: right; }
+[dir="rtl"] .trust a { white-space: nowrap; }
+[dir="rtl"] .lang { margin: 0 4px 0 8px; }
+[dir="rtl"] .nav-support { margin-left: 0; margin-right: 6px; }
+[dir="rtl"] .ticker ul { direction: ltr; }
+[dir="rtl"] .ticker li { direction: rtl; }
+[dir="rtl"] .beats::before { left: auto; right: 7px; }
+[dir="rtl"] .beat { padding: 0 44px 0 0; }
+[dir="rtl"] .beat::before { left: auto; right: 0; }
+[dir="rtl"] td { text-align: right; }
+[dir="rtl"] td:first-child { padding-right: 0; padding-left: 20px; }
+[dir="rtl"] .os details > ol, [dir="rtl"] .os details > ul { padding-left: 0; padding-right: 22px; }
+[dir="rtl"] .waitlist .hp { left: auto; right: -9999px; }
+[dir="rtl"] .stage { direction: ltr; }
+[dir="rtl"] .stage .peer { direction: rtl; }
