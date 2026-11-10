@@ -48,3 +48,9 @@ Render one with `node bin/vigenco.mjs render jobs/zerolink-feature-sos.json --ou
 `films/zerolink-umrah` is a 1:56 landscape film that walks a pilgrim group through every key feature, from
 departure to an emergency during Sa'i. The story and captions live in `story.js`; the screens are English-UI
 Robolectric screenshots with umrah sample data (names, Gate 79, heatstroke guide).
+
+## ZeroLink for Umrah & Hajj, motion version (English, 62 s)
+
+`films/zerolink-umrah-motion` tells the same pilgrim story in motion: UI pieces built in HTML and driven by springs,
+a cursor for the guide, a camera and one caption line, in the zerolink.web.id palette. Uses `types/_shared/motion.js`
+from Vigenco.
