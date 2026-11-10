@@ -42,3 +42,9 @@ The screenshots in `assets/` show the Indonesian app UI; captions are English.
 sos, find, private, range, prepare). Steps and captions live in `features.js`; the screens are English-UI
 Robolectric screenshots shown at true phone proportions, without zoom.
 Render one with `node bin/vigenco.mjs render jobs/zerolink-feature-sos.json --out sos.mp4`.
+
+## ZeroLink for Umrah & Hajj (English, one-go story)
+
+`films/zerolink-umrah` is a 1:56 landscape film that walks a pilgrim group through every key feature, from
+departure to an emergency during Sa'i. The story and captions live in `story.js`; the screens are English-UI
+Robolectric screenshots with umrah sample data (names, Gate 79, heatstroke guide).

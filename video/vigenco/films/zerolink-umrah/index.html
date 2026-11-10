@@ -1,0 +1,156 @@
+<!doctype html>
+<!-- ZeroLink by PUAS: "ZeroLink for Umrah & Hajj", one-go feature story, 1920x1080, English. Vigenco custom film.
+     Story and captions in story.js. Real ZeroLink screens (Robolectric, English UI, umrah sample data) at true
+     phone proportions, never zoomed; a tap marker shows each touch. -->
+<html lang="en"><head><meta charset="utf-8">
+<title>ZeroLink · Umrah &amp; Hajj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=block" rel="stylesheet">
+<style>
+:root{--night:#04201c;--cream:#f2edd5;--muted:#a9b9b3;--dim:#6d8580;--gold:#f6b84c;--goldInk:#072b26}
+*{box-sizing:border-box;margin:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--night)}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Plus Jakarta Sans",sans-serif;color:var(--cream);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(900px 800px at 1390px 540px,rgba(14,96,84,.55),transparent 70%),radial-gradient(900px 600px at 300px 1100px,rgba(246,184,76,.10),transparent 70%),var(--night)}
+#pattern{left:0;top:0;width:1920px;height:1080px;opacity:.05;
+  background-image:repeating-linear-gradient(45deg,var(--gold) 0 2px,transparent 2px 60px),repeating-linear-gradient(-45deg,var(--gold) 0 2px,transparent 2px 60px)}
+.a{position:absolute}
+.pill{display:inline-flex;align-items:center;gap:14px;padding:10px 22px;border-radius:999px;background:rgba(246,184,76,.14);color:var(--gold);font:700 24px/1 "Plus Jakarta Sans";letter-spacing:.02em}
+.pill img{width:30px;height:30px;border-radius:50%}
+#top{left:150px;top:110px}
+.step{left:150px;top:300px;width:880px}
+.kick{font:700 24px/1 "Plus Jakarta Sans";letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.hl{margin-top:22px;font:800 64px/1.08 "Plus Jakarta Sans";letter-spacing:-.035em}
+.dt{margin-top:24px;font:500 30px/1.45 "Plus Jakarta Sans";color:var(--muted);max-width:820px}
+.chip{display:inline-block;margin-top:30px;padding:10px 20px;border-radius:12px;border:2px solid rgba(246,184,76,.5);color:var(--gold);font:700 22px/1 "Plus Jakarta Sans";letter-spacing:.04em}
+#tl{left:150px;top:960px;width:880px;height:10px}
+.tk{position:absolute;top:0;height:6px;border-radius:3px;background:rgba(242,237,213,.10);overflow:hidden}
+.tk i{display:block;height:6px;background:var(--gold);width:0}
+.tl{position:absolute;top:20px;font:600 17px/1.2 "Plus Jakarta Sans";color:var(--dim)}
+#phone{left:1150px;top:66px;width:463px;height:948px;border-radius:64px;background:#0b0f0e;box-shadow:0 60px 120px -30px rgba(0,0,0,.85),inset 0 0 0 3px rgba(242,237,213,.14)}
+#scr{left:1174px;top:90px;width:415px;height:900px;border-radius:44px;overflow:hidden;background:#f6f6f2}
+#scr img{position:absolute;left:0;top:0;width:415px;height:900px}
+.tap{width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;z-index:60}
+.full{left:0;top:0;width:1920px;height:1080px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.big{font:800 84px/1.1 "Plus Jakarta Sans";letter-spacing:-.04em}
+.sm{margin-top:26px;font:500 40px/1.35 "Plus Jakarta Sans";color:var(--muted)}
+</style></head><body>
+<div id="stage">
+  <div class="a" id="pattern"></div>
+  <div class="a" id="top"></div>
+  <div class="a" id="steps"></div>
+  <div class="a" id="tl"></div>
+  <div class="a" id="phone"></div>
+  <div class="a" id="scr"></div>
+  <div class="a" id="intro"></div>
+  <div class="a full" id="title"></div>
+  <div class="a full" id="end"></div>
+  <div class="a tap" id="tap"></div>
+</div>
+<script src="story.js"></script>
+<script>
+(async function(){try{
+const ST=window.STORY;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>1-Math.pow(1-cl(x),3);
+const back=x=>{x=cl(x);const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const win=(t,a,b,d=.3)=>Math.min(ease((t-a)/d),ease((b-t)/d));
+const mk=(html,p)=>{const d=document.createElement('div');d.innerHTML=html.trim();const e=d.firstElementChild;p.appendChild(e);return e;};
+const vis=(e,o,tr)=>{e.style.opacity=o.toFixed(3);e.style.visibility=o<=.001?'hidden':'visible';if(tr!==undefined)e.style.transform=tr;};
+const logo=s=>`<img src="assets/mark.png" style="width:${s}px;height:${s}px;border-radius:50%">`;
+
+// ---- timing
+const INTRO=3.6;                               // seconds per intro card
+const TT=ST.intro.length*INTRO;                // title card starts
+const T0=TT+3.4;                               // story starts
+const SW=415,SH=900,SX=1174,SY=90;
+const S=ST.steps.map(s=>{const words=(s[4]+' '+s[5]).split(/\s+/).length;const hold=s[7]||0;
+  return {ch:s[0],img:s[1],tx:s[2],ty:s[3],hl:s[4],dt:s[5],chip:s[6],hold,dur:+Math.min(7,Math.max(4.6,2.0+words*.19)+hold).toFixed(2)};});
+let acc=T0;S.forEach(s=>{s.a=acc;acc+=s.dur;s.b=acc;s.tap=s.tx==null?null:+(s.b-1.1-s.hold).toFixed(2);});
+const TEND=acc,DUR=+(TEND+5).toFixed(2);
+const CH=ST.chapters.map((n,c)=>{const ss=S.filter(s=>s.ch===c);return {n,a:ss[0].a,b:ss[ss.length-1].b};});
+
+// ---- intro cards and title
+const intros=ST.intro.map(c=>mk(`<div class="a full"><div class="big">${c[0]}</div><div class="sm">${c[1]}</div></div>`,$('intro')));
+mk(`<div id="tLogo">${logo(170)}</div>`,$('title'));
+mk(`<div id="tH" class="big" style="margin-top:40px;font-size:104px">Zero<span style="color:var(--gold)">Link</span></div>`,$('title'));
+mk(`<div id="tS" class="sm" style="color:var(--cream)">for <span style="color:var(--gold);font-weight:700">Umrah &amp; Hajj</span> groups</div>`,$('title'));
+
+// ---- story
+mk(`<span class="pill"><img src="assets/mark.png">ZeroLink for Umrah &amp; Hajj</span>`,$('top'));
+const steps=S.map(s=>mk(`<div class="a step"><div class="kick">${ST.chapters[s.ch]}</div><div class="hl">${s.hl}</div><div class="dt">${s.dt}</div><span class="chip">${s.chip}</span></div>`,$('steps')));
+const imgs=S.map(s=>mk(`<img src="assets/${s.img}.jpg">`,$('scr')));
+const GAP=10,W=880,tot=TEND-T0;let x=0;
+const tks=CH.map(c=>{const w=(c.b-c.a)/tot*(W-GAP*(CH.length-1));const e=mk(`<div class="tk" style="left:${x}px;width:${w}px"><i></i></div>`,$('tl'));
+  x+=w+GAP;return [e.firstElementChild];});
+
+// ---- end card
+mk(`<div id="eLogo">${logo(150)}</div>`,$('end'));
+mk(`<div id="eW" class="big" style="margin-top:34px">${ST.end[0].replace('ZeroLink','Zero<span style="color:var(--gold)">Link</span>')}</div>`,$('end'));
+mk(`<div id="eH" class="sm" style="color:var(--cream)">${ST.end[1]}</div>`,$('end'));
+mk(`<div id="eU" style="margin-top:46px;padding:22px 48px;border-radius:999px;background:var(--gold);color:var(--goldInk);font:800 38px/1 'Plus Jakarta Sans'">zerolink.web.id</div>`,$('end'));
+mk(`<div id="eF" style="margin-top:32px;font:500 26px/1.5 'Plus Jakarta Sans';color:var(--muted)">Free for every pilgrim · no account · Android 6.0+</div>`,$('end'));
+
+await document.fonts.ready;
+await Promise.all([...document.images].map(im=>im.complete?0:new Promise(r=>{im.onload=im.onerror=r;})));
+// vertically centre each step block in the left column
+steps.forEach(e=>{e.style.top=Math.round(560-e.offsetHeight/2)+'px';});
+
+// ---- sound
+const cues=[];const cue=(t,k,x)=>cues.push(Object.assign({t:+t.toFixed(3),k},x||{}));
+cue(.1,'born');cue(.4,'note',{n:0});cue(INTRO,'swap',{n:1});cue(INTRO+.3,'note',{n:2});
+cue(TT,'whoosh',{v:.7});cue(TT+.2,'pop',{n:0});cue(TT+.9,'shimmer');cue(T0,'whoosh',{v:.6});
+S.forEach((s,i)=>{if(i)cue(s.a,'swap',{n:i});
+  if(i&&s.ch!==S[i-1].ch)cue(s.a+.1,'tick');
+  if(s.tap!=null){cue(s.tap,'click');if(s.hold){cue(s.tap+.05,'drag',{d:s.hold});cue(s.tap+s.hold,'release');}}
+  if(/sos-dengan|sos-masuk/.test(s.img)){cue(s.a+.2,'alert');cue(s.a+.8,'alert');}
+  if(/hasil-absen|daftar-pencarian|terkirim/.test(s.img))cue(s.a+.4,'check');});
+const sosA=S.find(s=>s.ch===5).a;
+cue(sosA-2.4,'riser',{d:2.4});cue(sosA,'drop');
+cue(TEND,'whoosh');cue(TEND+.3,'pop',{n:1});cue(TEND+.8,'pop',{n:2});cue(TEND+1.3,'cta');cue(TEND+1.8,'shimmer');
+
+window.seek=function(t){
+ // intro
+ intros.forEach((e,i)=>{const a=i*INTRO,b=a+INTRO;const o=win(t,a+(i?0:.2),b,.4);
+   vis(e,o,`translateY(${((1-ease((t-a)/.6))*30).toFixed(1)}px)`);});
+ vis($('title'),win(t,TT,T0,.4));
+ $('tLogo').style.transform=`scale(${(.5+.5*back((t-TT)/.5)).toFixed(4)})`;
+ [['tH',.3],['tS',.7]].forEach(([id,a])=>{const p=ease((t-TT-a)/.4);$(id).style.opacity=p;$(id).style.transform=`translateY(${(1-p)*26}px)`;});
+ $('pattern').style.opacity=(.05*(1-win(t,T0,TEND,.5)*.6)).toFixed(3);
+ // story chrome
+ const live=win(t,T0,TEND,.45);
+ vis($('top'),live);vis($('tl'),live);
+ S.forEach((s,i)=>{const o=win(t,s.a+.05,s.b,.3);const p=ease((t-s.a)/.5);
+   vis(steps[i],o,`translateY(${((1-p)*22).toFixed(1)}px)`);});
+ CH.forEach((c,i)=>{const p=cl((t-c.a)/(c.b-c.a));tks[i][0].style.width=(p*100).toFixed(2)+'%';
+});
+ const pin=ease((t-T0+.2)/.7),pout=ease((t-TEND+.2)/.5);
+ const px=(1-pin)*160+pout*120;
+ ['phone','scr'].forEach(id=>vis($(id),pin*(1-pout),`translateX(${px.toFixed(1)}px)`));
+ S.forEach((s,i)=>{const o=i===0?1:ease((t-s.a)/.18);vis(imgs[i],t<s.a&&i>0?0:o);imgs[i].style.zIndex=i;});
+ // end
+ vis($('end'),ease((t-TEND)/.4));
+ $('eLogo').style.transform=`scale(${(.5+.5*back((t-TEND)/.5)).toFixed(4)})`;
+ [['eW',.25],['eH',.5],['eU',.8],['eF',1.4]].forEach(([id,a])=>{const p=ease((t-TEND-a)/.4);$(id).style.opacity=p;
+   $(id).style.transform=`translateY(${(1-p)*24}px)`+(id==='eU'?` scale(${(1-.05*Math.exp(-(((t-TEND-1.3)/.08)**2))).toFixed(4)})`:'');});
+ // tap marker
+ const tap=$('tap');let cur=null;
+ S.forEach(s=>{if(s.tap!=null&&t>=s.tap-.7&&t<s.tap+s.hold+.5)cur=s;});
+ if(cur&&pin>.9&&pout<.1){const s=cur;const k=t-s.tap,held=s.hold&&k>=0&&k<s.hold,after=k-(s.hold||0);
+  tap.style.left=(SX+s.tx*SW+px).toFixed(1)+'px';tap.style.top=(SY+s.ty*SH).toFixed(1)+'px';
+  let sc,o;if(k<0){const p=cl((k+.7)/.3);sc=1.25-.25*p-.2*cl((k+.15)/.15);o=p*.95;}
+  else if(held){sc=.8+.05*Math.sin(k*12);o=.95;}else{sc=.85+after*1.4;o=.95*(1-cl(after/.45));}
+  tap.style.opacity=o.toFixed(3);tap.style.transform=`scale(${sc.toFixed(3)})`;
+  tap.style.background=k<0?'rgba(246,184,76,.28)':'rgba(246,184,76,.4)';
+  tap.style.boxShadow=`0 0 0 5px rgba(246,184,76,${k<0?.95:held?.95:.7*(1-cl(after/.45))}),0 8px 24px rgba(0,0,0,.35)`;
+ }else tap.style.opacity=0;
+};
+window.TAPTIMES=S.filter(s=>s.tap!=null).map(s=>s.tap+.02);
+window.STEPTIMES=S.map(s=>+(s.a+s.dur/2).toFixed(2));
+window.FILM={type:'custom',width:1920,height:1080,bpm:100,duration:DUR,
+  sections:{intro:[0,T0],features:[T0,sosA],drop:[sosA,S.find(s=>s.ch===6).a],outro:[TEND,DUR]},cues:cues.sort((a,b)=>a.t-b.t)};
+window.seek(0);window.READY=true;
+}catch(err){window.FILM_ERROR=String(err&&err.stack||err);}})();
+</script></body></html>
