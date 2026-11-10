@@ -1,0 +1,201 @@
+<!doctype html>
+<!-- ZeroLink by PUAS: install guide film, 1080x1920, ~40 s. Vigenco custom film.
+     window.seek(t) draws one frame; nothing animates on its own. window.FILM exports duration, bpm, sections and cues.
+     Language: job "lang": "en" (default) or "id". The Android system dialogs stay in English, as on most phones. -->
+<html lang="en"><head><meta charset="utf-8">
+<title>ZeroLink · How to install</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=block" rel="stylesheet">
+<style>
+:root{--night:#04201c;--card:#0a302a;--card2:#0e3932;--cream:#f2edd5;--muted:#a9b9b3;--gold:#f6b84c;--goldInk:#072b26;--teal:#0e6054;--sys:#f3f4f7;--sysInk:#1b1c1f;--sysMuted:#5c5f66;--pp:#d3e3fd;--ppInk:#0b57d0}
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--night)}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"Plus Jakarta Sans",sans-serif;color:var(--cream);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(900px 900px at 50% 30%,rgba(14,96,84,.55),transparent 70%),radial-gradient(800px 700px at 50% 100%,rgba(246,184,76,.14),transparent 70%),var(--night)}
+.a{position:absolute}
+.cap{left:0;width:1080px;top:110px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:12px;padding:12px 26px;border-radius:999px;background:rgba(246,184,76,.14);color:var(--gold);font:700 28px/1 "Plus Jakarta Sans";letter-spacing:.02em}
+.pill b{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--goldInk);font-size:22px}
+.h{margin-top:26px;font:800 62px/1.12 "Plus Jakarta Sans";letter-spacing:-.03em;color:var(--cream);padding:0 60px}
+.h em{font-style:normal;color:var(--gold)}
+#phone{left:196px;top:400px;width:688px;height:1480px;border-radius:78px;background:#0b0f0e;box-shadow:0 60px 120px -30px rgba(0,0,0,.8),inset 0 0 0 3px rgba(242,237,213,.12)}
+#scr{left:216px;top:420px;width:648px;height:1440px;border-radius:60px;overflow:hidden;background:#000}
+.layer{position:absolute;inset:0}
+.sb{position:absolute;left:0;right:0;top:0;height:64px;display:flex;align-items:center;padding:0 40px;font:500 26px/1 Roboto,sans-serif}
+.sb .r{margin-left:auto;display:flex;gap:10px;align-items:center}
+.nav{position:absolute;left:0;right:0;bottom:0;height:70px;display:flex;justify-content:center;gap:130px;align-items:center;opacity:.6}
+.nav i{width:26px;height:26px;border:3px solid currentColor;border-radius:4px}
+.dim{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.dlg{position:absolute;left:48px;right:48px;border-radius:30px;padding:40px 40px 30px;font-family:Roboto,sans-serif}
+.btns{display:flex;justify-content:flex-end;gap:46px;margin-top:34px;font:500 28px/1 Roboto,sans-serif}
+.ic{display:inline-grid;place-items:center;border-radius:50%;flex:none}
+.tap{width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;z-index:60}
+.ppbtn{height:84px;border-radius:42px;background:var(--pp);color:var(--ppInk);display:grid;place-items:center;font:500 28px/1 Roboto,sans-serif;margin-top:16px}
+</style></head><body>
+<div id="stage">
+  <div id="capWrap"></div>
+  <div class="a" id="phone"></div>
+  <div class="a" id="scr"></div>
+  <div class="a" id="title" style="left:0;width:1080px;top:0;height:1920px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center"></div>
+  <div class="a" id="end" style="left:0;width:1080px;top:0;height:1920px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center"></div>
+  <div class="a tap" id="tap"></div>
+</div>
+<script>
+(async function(){try{
+const SPEC=window.SPEC||{};const ID=(SPEC.lang||new URLSearchParams(location.search).get('lang'))==='id';
+document.documentElement.lang=ID?'id':'en';
+const L=ID?{
+ title:['Cara pasang','ZeroLink'],titleSub:'Dalam 40 detik, sebelum dibutuhkan.',
+ step:(n,m)=>`Langkah <b>${n}</b> dari ${m}`,done:'Terpasang',
+ caps:['Buka zerolink.web.id, lalu ketuk <em>Unduh APK</em>','Buka file yang terunduh: ketuk <em>Open</em>','HP minta izin dulu: ketuk <em>Settings</em>','Nyalakan <em>Allow apps from this source</em>','Ketuk <em>Install</em>','Play Protect? Pilih <em>Scan app</em>','Tunggu sampai pindaian selesai…','<em>Aman.</em> Ketuk <em>Install</em>','Terpasang! Ketuk <em>Open</em>','Nyalakan Wi‑Fi &amp; Lokasi, lalu ketuk <em>cari</em>'],
+ hero:['Saat sinyal mati,','kita tetap ','terhubung.'],lede:'Bicara, kirim pesan, bagikan lokasi, dan kirim SOS antar HP Android, langsung lewat Wi‑Fi Direct.',dl:'Unduh APK',how:'Cara instal',
+ endH:'Pasang sekarang,',endH2:'sebelum dibutuhkan.',endFine:'Gratis · tanpa akun · tanpa iklan · Android 6.0+',endShare:'Tanpa internet? Kirim APK lewat Quick Share atau Bluetooth.'
+}:{
+ title:['How to install','ZeroLink'],titleSub:'In 40 seconds, before you need it.',
+ step:(n,m)=>`Step <b>${n}</b> of ${m}`,done:'Installed',
+ caps:['Open zerolink.web.id and tap <em>Download APK</em>','Open the downloaded file: tap <em>Open</em>','Your phone asks first: tap <em>Settings</em>','Turn on <em>Allow apps from this source</em>','Tap <em>Install</em>','Play Protect? Choose <em>Scan app</em>','Wait for the scan to finish…','<em>Looks safe.</em> Tap <em>Install</em>','Installed! Tap <em>Open</em>','Turn on Wi‑Fi &amp; Location, then tap <em>search</em>'],
+ hero:['When the signal dies,','we stay ','connected.'],lede:'Talk, message, share your location and send SOS between Android phones, directly over Wi‑Fi Direct.',dl:'Download APK',how:'How to install',
+ endH:'Install it now,',endH2:'before you need it.',endFine:'Free · no account · no ads · Android 6.0+',endShare:'No internet? Send the APK over Quick Share or Bluetooth.'
+};
+
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>1-Math.pow(1-cl(x),3);
+const back=x=>{x=cl(x);const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const win=(t,a,b,d=.3)=>Math.min(ease((t-a)/d),ease((b-t)/d));
+const mk=(html,parent)=>{const d=document.createElement('div');d.innerHTML=html.trim();const e=d.firstElementChild;parent.appendChild(e);return e;};
+const scr=$('scr');
+const mark='assets/mark.png';
+const chromeIc=s=>`<span class="ic" style="width:${s}px;height:${s}px;background:conic-gradient(#ea4335 0 120deg,#fbbc04 120deg 240deg,#34a853 240deg 360deg)"><span class="ic" style="width:${s*.46}px;height:${s*.46}px;background:#fff"><span class="ic" style="width:${s*.34}px;height:${s*.34}px;background:#4285f4"></span></span></span>`;
+const zIc=s=>`<img src="${mark}" style="width:${s}px;height:${s}px;border-radius:50%;flex:none">`;
+const sbar=(dark)=>`<div class="sb" style="color:${dark?'#f2edd5':'#1b1c1f'}"><span>19:54</span><span class="r"><svg width="26" height="20" viewBox="0 0 26 20"><path d="M2 7a16 16 0 0 1 22 0M6 11a10 10 0 0 1 14 0M10 15a4 4 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><svg width="40" height="22" viewBox="0 0 40 22"><rect x="1" y="3" width="32" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="6" width="22" height="10" rx="2" fill="currentColor"/><rect x="34.5" y="8" width="3" height="6" rx="1" fill="currentColor"/></svg></span></div>`;
+const navb=(dark)=>`<div class="nav" style="color:${dark?'#f2edd5':'#1b1c1f'}"><i style="border-radius:50%"></i><i></i><i style="border:none;width:0;height:0;border-top:14px solid transparent;border-bottom:14px solid transparent;border-right:22px solid currentColor;border-radius:0"></i></div>`;
+
+// ---------- screen layers ----------
+// Site in Chrome
+const site=mk(`<div class="layer" style="background:#04201c">${sbar(true)}
+ <div style="position:absolute;left:24px;right:24px;top:72px;height:76px;border-radius:38px;background:#0e3932;display:flex;align-items:center;gap:18px;padding:0 26px;font:400 28px/1 Roboto;color:#d6ddd9">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11 12 4l9 7v9H3z"/></svg><span>zerolink.web.id</span><span style="margin-left:auto;font-size:34px">⋮</span></div>
+ <div style="position:absolute;left:44px;right:44px;top:190px">
+  <div style="display:flex;align-items:center;gap:16px;font:800 34px/1 'Plus Jakarta Sans'">${zIc(60)}ZeroLink</div>
+  <div style="margin-top:80px;font:800 74px/1.06 'Plus Jakarta Sans';letter-spacing:-.035em">${L.hero[0]} ${L.hero[1]}<span style="color:#f6b84c">${L.hero[2]}</span></div>
+  <div style="margin-top:36px;font:500 30px/1.45 'Plus Jakarta Sans';color:#a9b9b3">${L.lede}</div>
+  <div style="margin-top:56px;display:flex;gap:18px">
+   <span id="dlBtn" style="display:inline-flex;align-items:center;gap:12px;height:92px;padding:0 32px;border-radius:46px;background:#f6b84c;color:#072b26;white-space:nowrap;font:800 30px/1 'Plus Jakarta Sans'"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>${L.dl}</span>
+   <span style="display:inline-flex;align-items:center;height:92px;padding:0 28px;border-radius:46px;white-space:nowrap;box-shadow:inset 0 0 0 2px rgba(242,237,213,.25);font:700 28px/1 'Plus Jakarta Sans'">${L.how}</span></div>
+ </div>${navb(true)}</div>`,scr);
+const dlPanel=mk(`<div class="layer" style="pointer-events:none"><div style="position:absolute;left:24px;right:24px;top:164px;border-radius:28px;background:#f3f4f7;color:#1b1c1f;padding:28px 30px;display:flex;align-items:center;gap:22px;font-family:Roboto;box-shadow:0 20px 50px rgba(0,0,0,.4)">
+ <span class="ic" style="width:64px;height:64px;background:#e3f4ee;color:#0e6054"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+ <div style="flex:1"><div style="font:500 30px/1.2 Roboto">File downloaded</div><div style="font:400 24px/1.4 Roboto;color:#5c5f66">zerolink.apk · 665 KB</div></div>
+ <span id="openDl" style="font:500 30px/1 Roboto;color:#0b57d0;padding:16px 10px">Open</span></div></div>`,scr);
+const chromeDlg=mk(`<div class="layer"><div class="dim"></div><div class="dlg" style="top:520px;background:#f3f4f7;color:#1b1c1f">
+ <div style="display:flex;align-items:center;gap:18px;font:500 34px/1 Roboto">${chromeIc(50)}Chrome</div>
+ <div style="margin-top:24px;font:400 28px/1.45 Roboto;color:#3c3f45">For your security, your phone currently isn't allowed to install unknown apps from this source. You can change this in Settings.</div>
+ <div class="btns" style="color:#0b57d0"><span>Cancel</span><span id="setBtn">Settings</span></div></div></div>`,scr);
+const settings=mk(`<div class="layer" style="background:#f3f4f7;color:#1b1c1f">${sbar(false)}
+ <div style="position:absolute;left:40px;top:110px;display:flex;align-items:center;gap:30px;font:400 38px/1 Roboto"><span style="font-size:40px">←</span>Install unknown apps</div>
+ <div style="position:absolute;left:40px;right:40px;top:250px;display:flex;align-items:center;gap:26px">${chromeIc(84)}<div><div style="font:400 34px/1.2 Roboto">Chrome</div><div style="font:400 24px/1.4 Roboto;color:#5c5f66">131.0.6778.81</div></div></div>
+ <div style="position:absolute;left:30px;right:30px;top:420px;height:120px;border-radius:30px;background:#fff;display:flex;align-items:center;padding:0 34px;font:400 30px/1.2 Roboto">Allow apps from this source
+  <span id="tgl" style="margin-left:auto;position:relative;width:96px;height:56px;border-radius:28px;background:#c4c7c5"><i id="knob" style="position:absolute;left:8px;top:8px;width:40px;height:40px;border-radius:50%;background:#fff"></i></span></div>
+ <div style="position:absolute;left:40px;right:40px;top:600px;font:400 24px/1.5 Roboto;color:#5c5f66">Your phone and personal data are more vulnerable to attack by unknown apps. By installing apps from this source, you agree that you are responsible for any damage to your phone or loss of data that may result from their use.</div>
+ ${navb(false)}</div>`,scr);
+const instDlg=mk(`<div class="layer"><div class="dim"></div><div class="dlg" style="top:560px;background:#f7f2e8;color:#1b1c1f">
+ <div style="display:flex;align-items:center;gap:20px;font:500 36px/1 Roboto">${zIc(64)}ZeroLink</div>
+ <div style="margin-top:26px;font:400 30px/1.4 Roboto;color:#3c3f45">Do you want to install this app?</div>
+ <div class="btns" style="color:#0e6054"><span>Cancel</span><span id="instBtn">Install</span></div></div></div>`,scr);
+const pp=mk(`<div class="layer"><div class="dim" style="background:rgba(0,0,0,.6)"></div><div class="dlg" style="top:330px;left:34px;right:34px;background:#fff;color:#1b1c1f;padding:40px 40px 40px;text-align:center">
+ <div style="display:flex;align-items:center;justify-content:center;gap:10px;font:500 24px/1 Roboto;color:#3c3f45"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Google Play Protect</div>
+ <div id="ppT" style="margin-top:26px;font:400 42px/1.2 Roboto"></div>
+ <div style="margin-top:30px;height:100px;border-radius:50px;background:#eef1f8;display:flex;align-items:center;gap:20px;padding:0 30px;font:400 30px/1 Roboto;text-align:left">${zIc(56)}ZeroLink</div>
+ <div id="ppA"><div style="margin-top:30px;font:400 25px/1.5 Roboto;color:#3c3f45">Play Protect hasn't seen this app before. To protect your device and data, send this app to Google for a security scan.</div>
+  <div style="margin:22px 0 14px;font:500 25px/1 Roboto;color:#3c3f45">More details ⌄</div>
+  <div class="ppbtn" id="scanBtn">Scan app</div><div class="ppbtn">Don't install app</div></div>
+ <div id="ppB" style="display:none"><div id="spin" style="margin:44px auto 0;width:74px;height:74px;border-radius:50%;border:7px solid #d3e3fd;border-top-color:#0b57d0"></div>
+  <div style="margin-top:40px;font:400 25px/1.5 Roboto;color:#3c3f45">Scanning the app may take a little while. You'll see results on this screen.</div>
+  <div class="ppbtn" style="margin-top:40px">Cancel and don't install</div></div>
+ <div id="ppC" style="display:none"><div class="ic" style="margin:40px auto 0;width:84px;height:84px;box-shadow:inset 0 0 0 4px #1b1c1f"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1b1c1f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+  <div style="margin-top:30px;font:400 26px/1.5 Roboto;color:#3c3f45">You can continue to install it</div>
+  <div class="ppbtn" id="ppInst" style="margin-top:30px">Install</div><div class="ppbtn">Don't install</div></div>
+ </div></div>`,scr);
+const doneDlg=mk(`<div class="layer"><div class="dim"></div><div class="dlg" style="top:580px;background:#f7f2e8;color:#1b1c1f">
+ <div style="display:flex;align-items:center;gap:20px;font:500 36px/1 Roboto">${zIc(64)}ZeroLink</div>
+ <div style="margin-top:26px;font:400 30px/1.4 Roboto;color:#3c3f45">App installed.</div>
+ <div class="btns" style="color:#0e6054"><span>Done</span><span id="openBtn">Open</span></div></div></div>`,scr);
+const app=mk(`<div class="layer" style="background:#04201c"><img src="assets/app.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top"><i id="appSearch" style="position:absolute;width:10px;height:10px;left:573px;top:169px"></i></div>`,scr);
+
+// captions
+const capW=$('capWrap');
+const caps=L.caps.map((h,i)=>mk(`<div class="a cap"><span class="pill">${i<9?L.step([1,2,3,4,5,6,6,6,7][i],7):'✓ '+L.done}</span><div class="h">${h}</div></div>`,capW));
+// title & end
+mk(`<div id="tLogo">${zIc(220)}</div>`,$('title'));
+mk(`<div id="tH" style="margin-top:56px;font:800 104px/1.04 'Plus Jakarta Sans';letter-spacing:-.04em">${L.title[0]}<br><span style="color:var(--gold)">${L.title[1]}</span></div>`,$('title'));
+mk(`<div id="tS" style="margin-top:34px;font:500 38px/1.3 'Plus Jakarta Sans';color:var(--muted)">${L.titleSub}</div>`,$('title'));
+mk(`<div id="eLogo">${zIc(200)}</div>`,$('end'));
+mk(`<div id="eW" style="margin-top:44px;font:800 120px/1 'Plus Jakarta Sans';letter-spacing:-.05em">Zero<span style="color:var(--gold)">Link</span></div>`,$('end'));
+mk(`<div id="eH" style="margin-top:30px;font:600 46px/1.25 'Plus Jakarta Sans';color:var(--cream)">${L.endH}<br><span style="color:var(--gold)">${L.endH2}</span></div>`,$('end'));
+mk(`<div id="eU" style="margin-top:56px;padding:26px 54px;border-radius:999px;background:var(--gold);color:var(--goldInk);font:800 44px/1 'Plus Jakarta Sans'">zerolink.web.id</div>`,$('end'));
+mk(`<div id="eF" style="margin-top:44px;font:500 30px/1.5 'Plus Jakarta Sans';color:var(--muted);padding:0 80px">${L.endFine}<br>${L.endShare}</div>`,$('end'));
+
+// ---------- timeline ----------
+// [caption index, start, end]
+const CAPS=[[0,3.0,8.0],[1,8.0,11.5],[2,11.5,15.0],[3,15.0,19.0],[4,19.0,22.5],[5,22.5,25.5],[6,25.5,27.5],[7,27.5,30.5],[8,30.5,33.5],[9,33.5,37.0]];
+// taps: [t, x, y] in screen coords (relative to the phone screen)
+const SX=216,SY=420;
+const TAPS=[[6.6,'dlBtn'],[10.2,'openDl'],[13.7,'setBtn'],[17.3,'tgl'],[21.0,'instBtn'],[24.3,'scanBtn'],[29.2,'ppInst'],[32.4,'openBtn'],[34.6,'appSearch']];
+const pos=id=>{const r=$(id).getBoundingClientRect();return [r.left+r.width/2-SX,r.top+r.height/2-SY];};
+
+const cues=[];const cue=(t,k,x)=>cues.push(Object.assign({t:+t.toFixed(3),k},x||{}));
+cue(.2,'born');cue(.6,'pop',{n:0});cue(1.1,'shimmer');cue(3.0,'whoosh',{v:.7});
+CAPS.forEach(([i,a])=>{if(a>3.1)cue(a,'swap',{n:i});});
+TAPS.forEach(([t])=>cue(t,'click'));
+cue(8.1,'pop',{n:2});cue(17.35,'toggle');cue(27.5,'check');cue(30.6,'check');cue(33.5,'whoosh',{v:.6});
+cue(37.0,'whoosh');cue(37.3,'pop',{n:1});cue(37.8,'pop',{n:2});cue(38.4,'cta');cue(38.9,'shimmer');
+
+const vis=(e,o,tr='')=>{e.style.opacity=o.toFixed(3);e.style.visibility=o<=.001?'hidden':'visible';e.style.transform=tr;};
+window.seek=function(t){
+ // title 0–3, end 37–40
+ const to=win(t,0,3.0,.35);vis($('title'),to);
+ $('tLogo').style.transform=`scale(${(.5+.5*back((t-.2)/.5)).toFixed(4)})`;
+ [['tH',.6],['tS',1.1]].forEach(([id,a])=>{const p=ease((t-a)/.4);$(id).style.opacity=p;$(id).style.transform=`translateY(${(1-p)*30}px)`;});
+ const eo=ease((t-37.0)/.35);vis($('end'),eo);
+ $('eLogo').style.transform=`scale(${(.5+.5*back((t-37.0)/.5)).toFixed(4)})`;
+ [['eW',37.3],['eH',37.6],['eU',37.9],['eF',38.6]].forEach(([id,a])=>{const p=ease((t-a)/.4);$(id).style.opacity=p;$(id).style.transform=`translateY(${(1-p)*30}px)`+(id==='eU'?` scale(${(1-.05*Math.exp(-(((t-38.4)/.08)**2))).toFixed(4)})`:'');});
+ // phone in/out
+ const po=win(t,3.0,37.0,.4);const py=(1-ease((t-3.0)/.5))*120+(ease((t-36.7)/.4))*60;
+ ['phone','scr'].forEach(id=>vis($(id),po,`translateY(${py.toFixed(1)}px)`));
+ // captions
+ caps.forEach((c,i)=>{const [,a,b]=CAPS[i];const o=win(t,a,b,.25);vis(c,o,`translateY(${((1-ease((t-a)/.3))*24).toFixed(1)}px)`);c.style.filter=o<1?`blur(${((1-o)*8).toFixed(1)}px)`:'';});
+ // screens
+ const L1=(e,a,b,d=.25)=>{const o=win(t,a,b,d);vis(e,o);return o;};
+ L1(site,2.8,15.0,.01);
+ const dp=L1(dlPanel,8.0,11.5);dlPanel.firstElementChild.style.transform=`translateY(${((1-ease((t-8.0)/.35))*-60).toFixed(1)}px)`;
+ const cd=L1(chromeDlg,11.5,15.0);chromeDlg.lastElementChild.style.transform=`scale(${(.9+.1*back((t-11.5)/.35)).toFixed(4)})`;
+ L1(settings,15.0,33.5,.2);
+ const on=ease((t-17.35)/.2);$('knob').style.left=(8+40*on).toFixed(1)+'px';$('tgl').style.background=on>.5?'#0e6054':'#c4c7c5';
+ L1(instDlg,19.0,22.5);instDlg.lastElementChild.style.transform=`scale(${(.9+.1*back((t-19.0)/.35)).toFixed(4)})`;
+ L1(pp,22.5,30.5);pp.lastElementChild.style.transform=`translateY(${((1-ease((t-22.5)/.4))*80).toFixed(1)}px)`;
+ const st=t<24.5?0:t<27.5?1:2;$('ppA').style.display=st===0?'':'none';$('ppB').style.display=st===1?'':'none';$('ppC').style.display=st===2?'':'none';
+ $('ppT').textContent=['App scan recommended','Scanning…','This app looks safe'][st];
+ $('spin').style.transform=`rotate(${(t*420).toFixed(1)}deg)`;
+ L1(doneDlg,30.5,33.5);doneDlg.lastElementChild.style.transform=`scale(${(.9+.1*back((t-30.5)/.35)).toFixed(4)})`;
+ const ao=L1(app,33.5,37.2);app.firstElementChild.style.transform=`scale(${(1.06-.06*ease((t-33.5)/.6)).toFixed(4)})`;
+ // tap indicator
+ let tp=null;for(const [tt,x,y] of TAPS){if(t>=tt-.45&&t<tt+.5)tp=[tt,x,y];}
+ const tap=$('tap');
+ if(tp&&po>.5){const [tt,x,y]=tp;const k=(t-tt);const pre=cl((t-(tt-.45))/.25);
+  tap.style.left=(SX+x)+'px';tap.style.top=(SY+y+py)+'px';
+  const s=k<0?1-.25*cl((k+.2)/.2):1+k*1.6;const o=k<0?pre*.9:.9*(1-cl(k/.5));
+  tap.style.opacity=o.toFixed(3);tap.style.transform=`scale(${s.toFixed(3)})`;
+  tap.style.background=k<0?'rgba(242,237,213,.35)':'rgba(246,184,76,.25)';tap.style.boxShadow=`0 0 0 ${k<0?4:6}px rgba(246,184,76,${k<0?.9:.6*(1-cl(k/.5))})`;
+ } else tap.style.opacity=0;
+};
+window.FILM={type:'custom',width:1080,height:1920,bpm:120,duration:40,
+  sections:{intro:[0,3],features:[3,22.5],drop:[30.5,33.5],outro:[37,40]},cues:cues.sort((a,b)=>a.t-b.t)};
+await document.fonts.ready;
+await Promise.all([...document.images].map(im=>im.complete?0:new Promise(r=>{im.onload=im.onerror=r;})));
+// resolve tap targets to screen coordinates at the moment of each tap (layout without the phone's slide)
+for(const tp of TAPS){window.seek(tp[0]);$('phone').style.transform=$('scr').style.transform='';const [x,y]=pos(tp[1]);tp[1]=x;tp[2]=y;}
+window.seek(0);window.READY=true;
+}catch(err){window.FILM_ERROR=String(err&&err.stack||err);}})();
+</script></body></html>

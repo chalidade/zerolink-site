@@ -16,3 +16,16 @@ cd <vigenco> && node bin/vigenco.mjs render jobs/zerolink-disaster-en.json --out
 ```
 
 The music and sound effects are synthesized by Vigenco from the film's cues, so they carry no licence.
+
+# Install guide film (40 s, vertical)
+
+`media/zerolink-install-id.mp4` (Indonesian captions) and `media/zerolink-install-en.mp4` (English captions) come from
+`video/vigenco/films/zerolink-install`, a self-contained Vigenco film: the site, the download, Chrome's permission,
+"Allow apps from this source", Install, Play Protect scan, App installed, then ZeroLink opens. The language comes from
+the job's `"lang"`. The six photos in `install/` are stills of the same film's phone screen.
+
+```bash
+cp -r video/vigenco/films/zerolink-install <vigenco>/films/
+cp video/vigenco/jobs/zerolink-install-*.json <vigenco>/jobs/
+cd <vigenco> && node bin/vigenco.mjs render jobs/zerolink-install-id.json --out out/zerolink-install-id.mp4
+```
