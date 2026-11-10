@@ -54,3 +54,8 @@ Robolectric screenshots with umrah sample data (names, Gate 79, heatstroke guide
 `films/zerolink-umrah-motion` tells the same pilgrim story in motion: UI pieces built in HTML and driven by springs,
 a cursor for the guide, a camera and one caption line, in the zerolink.web.id palette. Uses `types/_shared/motion.js`
 from Vigenco.
+
+## ZeroLink for Mining & Energy, motion version (English, 62 s)
+
+`films/zerolink-mining-motion` is the same motion film adapted to a remote mine site: a shift crew with no
+coverage, a blast notice, a muster point, a headcount before the blast, a search for a driller and a man-down SOS.
