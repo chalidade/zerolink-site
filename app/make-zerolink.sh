@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds the ZeroLink by PUAS APK from a Saling Jaga checkout.
 #
-# ZeroLink is the Saling Jaga app (AGPL-3.0-or-later, https://github.com/chalidade/saling-jaga)
+# ZeroLink is the Saling Jaga app (proprietary, https://github.com/chalidade/saling-jaga)
 # with its own name, icon, colours and application ID, so both apps can sit on one phone.
 # The network protocol is untouched: ZeroLink and Saling Jaga phones join the same groups.
 #

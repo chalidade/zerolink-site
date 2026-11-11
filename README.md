@@ -2,8 +2,8 @@
 
 Website for **zerolink.web.id** and the build script for the ZeroLink Android app.
 
-ZeroLink is a rebrand of [Saling Jaga](https://github.com/chalidade/saling-jaga), an open-source
-(AGPL-3.0-or-later) app for calls, chat and SOS between phones with no internet and no signal.
+ZeroLink is a rebrand of [Saling Jaga](https://github.com/chalidade/saling-jaga), a proprietary
+app for calls, chat and SOS between phones with no internet and no signal.
 It keeps the same features and network protocol, so ZeroLink and Saling Jaga phones can join the
 same groups, but has its own name, logo, colours and application ID (`com.puas.zerolink`), so both
 can be installed on one phone.
@@ -39,4 +39,5 @@ from the `release` environment secrets `ZEROLINK_KEYSTORE_B64`, `ZEROLINK_KS_PAS
 
 ## Source
 
-The app's source code is the Saling Jaga repository plus `app/make-zerolink.sh`, under AGPL-3.0-or-later.
+The app's source code is the private Saling Jaga repository plus `app/make-zerolink.sh`. It is proprietary:
+Copyright (C) 2026 Chalid Ade Rahman, all rights reserved. ZeroLink is published under licence from the copyright holder.
