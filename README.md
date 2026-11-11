@@ -34,7 +34,8 @@ list, so the app opens straight into the group screen (find phones, then chat), 
 Google Play takes an App Bundle. Run **Actions > ZeroLink App Bundle > Run workflow** and download the
 `zerolink-play` artifact (`zerolink.aab`, `zerolink.apk`). The workflow signs with the ZeroLink release key
 from the `release` environment secrets `ZEROLINK_KEYSTORE_B64`, `ZEROLINK_KS_PASS`, `ZEROLINK_KEY_ALIAS` and
-`ZEROLINK_KEY_PASS`. With the Android SDK installed, `BUNDLE=1 BUNDLETOOL=/path/bundletool.jar` does the same locally.
+`ZEROLINK_KEY_PASS`, plus `SALING_JAGA_TOKEN`
+(a fine-grained token with read-only Contents on the private saling-jaga repository). With the Android SDK installed, `BUNDLE=1 BUNDLETOOL=/path/bundletool.jar` does the same locally.
 
 ## Source
 
