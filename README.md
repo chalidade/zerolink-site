@@ -25,6 +25,17 @@ sha256sum zerolink.apk > zerolink.apk.sha256
 
 The release keystore is kept outside this repository. Every update must be signed with the same key.
 
+ZeroLink differs from Saling Jaga in one more way for now: Bluetooth "Nearby" is off and there is no chat
+list, so the app opens straight into the group screen (find phones, then chat), like the first Saling Jaga.
+`make-zerolink.sh` makes these changes and stops the build if the Saling Jaga code it patches has moved.
+
+## Google Play
+
+Google Play takes an App Bundle. Run **Actions > ZeroLink App Bundle > Run workflow** and download the
+`zerolink-play` artifact (`zerolink.aab`, `zerolink.apk`). The workflow signs with the ZeroLink release key
+from the `release` environment secrets `ZEROLINK_KEYSTORE_B64`, `ZEROLINK_KS_PASS`, `ZEROLINK_KEY_ALIAS` and
+`ZEROLINK_KEY_PASS`. With the Android SDK installed, `BUNDLE=1 BUNDLETOOL=/path/bundletool.jar` does the same locally.
+
 ## Source
 
 The app's source code is the Saling Jaga repository plus `app/make-zerolink.sh`, under AGPL-3.0-or-later.

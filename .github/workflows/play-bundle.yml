@@ -1,0 +1,87 @@
+name: ZeroLink App Bundle
+
+# Builds the ZeroLink App Bundle (.aab) for Google Play and the matching APK from a Saling Jaga checkout,
+# signed with the ZeroLink release key, and keeps both as this run's artifact "zerolink-play".
+# Run it by hand: Actions > ZeroLink App Bundle > Run workflow.
+# Needs four secrets in the "release" environment (Settings > Environments > release):
+#   ZEROLINK_KEYSTORE_B64  base64 of zerolink-release.keystore
+#   ZEROLINK_KS_PASS, ZEROLINK_KEY_ALIAS, ZEROLINK_KEY_PASS  from zerolink-release.env
+on:
+  workflow_dispatch:
+    inputs:
+      saling_jaga_ref:
+        description: Saling Jaga branch, tag or commit to build from
+        default: main
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    environment: release
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          path: zerolink-site
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          repository: chalidade/saling-jaga
+          ref: ${{ inputs.saling_jaga_ref }}
+          path: saling-jaga
+
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Android SDK, Android 6 API and bundletool
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y android-sdk-platform-23
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0" > /dev/null
+          curl -sSfL -o "$RUNNER_TEMP/bundletool.jar" https://github.com/google/bundletool/releases/download/1.17.2/bundletool-all-1.17.2.jar
+          # Pinned: this job can reach the release key, so a swapped download must fail the build.
+          echo "2d4ad908faea64047c1cc9cb747e6aa667c6ab192e09607bd16b67246a8cd6ae  $RUNNER_TEMP/bundletool.jar" | sha256sum -c -
+          echo "BUNDLETOOL=$RUNNER_TEMP/bundletool.jar" >> "$GITHUB_ENV"
+
+      - name: Restore release key
+        env:
+          ZEROLINK_KEYSTORE_B64: ${{ secrets.ZEROLINK_KEYSTORE_B64 }}
+        run: |
+          if [ -z "$ZEROLINK_KEYSTORE_B64" ]; then
+            echo "::error::ZEROLINK_KEYSTORE_B64 kosong. Tanpa kunci rilis ZeroLink, Play dan APK di website tidak bisa saling update."
+            exit 1
+          fi
+          echo "$ZEROLINK_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/zerolink-release.keystore"
+          echo "KEYSTORE=$RUNNER_TEMP/zerolink-release.keystore" >> "$GITHUB_ENV"
+
+      - name: Build
+        env:
+          KS_PASS: ${{ secrets.ZEROLINK_KS_PASS }}
+          KEY_ALIAS: ${{ secrets.ZEROLINK_KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.ZEROLINK_KEY_PASS || secrets.ZEROLINK_KS_PASS }}
+        run: |
+          # Strictly increasing per run, so Play and phones take each build as an update.
+          export VERSION_CODE=$(( ${{ github.run_number }} + 1000 ))
+          mkdir out
+          BUNDLE=1 zerolink-site/app/make-zerolink.sh "$PWD/saling-jaga" "$PWD/out/zerolink.apk"
+          (cd out && sha256sum zerolink.apk zerolink.aab > SHA256SUMS)
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)
+          "$BT/aapt2" dump badging out/zerolink.apk | head -1
+          {
+            echo "### ZeroLink"
+            echo '```'
+            "$BT/aapt2" dump badging out/zerolink.apk | head -1
+            "$BT/apksigner" verify --print-certs out/zerolink.apk | grep -m1 'SHA-256 digest'
+            cat out/SHA256SUMS
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: zerolink-play
+          path: out/
+          if-no-files-found: error
