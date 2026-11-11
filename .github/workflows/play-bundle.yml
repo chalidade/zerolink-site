@@ -6,6 +6,7 @@ name: ZeroLink App Bundle
 # Needs four secrets in the "release" environment (Settings > Environments > release):
 #   ZEROLINK_KEYSTORE_B64  base64 of zerolink-release.keystore
 #   ZEROLINK_KS_PASS, ZEROLINK_KEY_ALIAS, ZEROLINK_KEY_PASS  from zerolink-release.env
+#   SALING_JAGA_TOKEN  fine-grained token with read-only "Contents" on chalidade/saling-jaga (a private repo)
 on:
   workflow_dispatch:
     inputs:
@@ -31,6 +32,8 @@ jobs:
           repository: chalidade/saling-jaga
           ref: ${{ inputs.saling_jaga_ref }}
           path: saling-jaga
+          token: ${{ secrets.SALING_JAGA_TOKEN }}
+          persist-credentials: false
 
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
