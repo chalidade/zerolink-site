@@ -37,9 +37,15 @@ sed -i 's#Lang.t("Bantu aplikasi ini tetap gratis", "Help keep this app free")#L
 
 # 2. Own application ID and file provider, so it installs next to Saling Jaga.
 sed -i "s/com\.salingjaga\.app\.capture/$APP_ID.capture/" app/src/main/AndroidManifest.xml "$J/CaptureProvider.java"
-sed -i "s#-I \"\$LEGACY_JAR\" \\\\#-I \"\$LEGACY_JAR\" --rename-manifest-package $APP_ID \\\\#" build.sh
-sed -i "s#--manifest \"\$SRC/AndroidManifest.xml\" \\\\#--manifest \"\$SRC/AndroidManifest.xml\" --rename-manifest-package $APP_ID \\\\#" build.sh
-grep -q -- "--rename-manifest-package $APP_ID" build.sh || { echo "could not set the application ID" >&2; exit 1; }
+if grep -q '^APP_ID=' build.sh; then
+  # build.sh renames the manifest package itself; point it at ZeroLink's ID.
+  sed -i "s/^APP_ID=.*/APP_ID=$APP_ID/" build.sh
+  grep -q "^APP_ID=$APP_ID\$" build.sh || { echo "could not set the application ID" >&2; exit 1; }
+else
+  sed -i "s#-I \"\$LEGACY_JAR\" \\\\#-I \"\$LEGACY_JAR\" --rename-manifest-package $APP_ID \\\\#" build.sh
+  sed -i "s#--manifest \"\$SRC/AndroidManifest.xml\" \\\\#--manifest \"\$SRC/AndroidManifest.xml\" --rename-manifest-package $APP_ID \\\\#" build.sh
+  grep -q -- "--rename-manifest-package $APP_ID" build.sh || { echo "could not set the application ID" >&2; exit 1; }
+fi
 
 # 3. PUAS colours: deep teal with gold, instead of Saling Jaga green.
 grep -rl '#FF1C5233' app/src/main/res/values | xargs -r sed -i 's/#FF1C5233/#FF0B3D36/'
@@ -55,6 +61,36 @@ done
 # 4. PUAS logo for the launcher icon, header and splash.
 cp -r "$HERE/res/." app/src/main/res/
 
+# 5. No Bluetooth "Nearby" chat for now: the app opens straight into the group screen, which looks for
+#    phones to connect to and then becomes the chat, like the first Saling Jaga. No chat list (home) either:
+#    private chats open from the member list and from their notifications. Back on the group screen leaves the app.
+patch() { # file, old, new: literal replace; old must occur exactly once
+  OLD=$2 NEW=$3 perl -0pi -e '$n = () = /\Q$ENV{OLD}\E/g; die "make-zerolink: expected one match in $ARGV, found $n:\n$ENV{OLD}\n" if $n != 1; s/\Q$ENV{OLD}\E/$ENV{NEW}/' "$1"
+}
+M=$J/MainActivity.java
+patch "$J/BleMesh.java" 'return c.getPackageManager().hasSystemFeature("android.hardware.bluetooth_le");' \
+  'return false; // ZeroLink: Bluetooth nearby is off for now.'
+patch "$M" '        chatRoot = root;
+        root.setVisibility(View.GONE);
+        homeView = buildHome();
+        outer.addView(homeView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));' \
+  '        chatRoot = root;
+        homeView = buildHome();
+        outer.addView(homeView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+        homeView.setVisibility(View.GONE);'
+patch "$M" '        hideKeyboard(input);
+        chatRoot.setVisibility(View.GONE);
+        homeView.setVisibility(View.VISIBLE);' \
+  '        hideKeyboard(input);
+        if (chatRoot != null) { openGroupChat(); return; }
+        chatRoot.setVisibility(View.GONE);
+        homeView.setVisibility(View.VISIBLE);'
+patch "$M" '        else if (inGroupChat()) showHome();
+        else return false;' '        else return false;'
+patch "$M" '                || guidePage.getVisibility() == View.VISIBLE || nearbyPage.getVisibility() == View.VISIBLE
+                || inGroupChat();' '                || guidePage.getVisibility() == View.VISIBLE || nearbyPage.getVisibility() == View.VISIBLE;'
+patch "$M" '        backButton.setVisibility(chat ? View.VISIBLE : View.GONE);' '        backButton.setVisibility(View.GONE);'
+
 # Debian's old aapt cannot read fillType="evenOdd"; the Android SDK build keeps it.
 if [ -z "${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}" ]; then
   sed -i 's/android:fillType="evenOdd"//' app/src/main/res/drawable/*.xml
@@ -63,3 +99,8 @@ fi
 ./build.sh
 cp build/saling-jaga-debug.apk "$OUT"
 echo "ZeroLink APK: $OUT"
+# BUNDLE=1 (Android SDK and BUNDLETOOL needed) also gives the App Bundle for Google Play, next to the APK.
+if [ -f build/saling-jaga.aab ]; then
+  cp build/saling-jaga.aab "${OUT%.apk}.aab"
+  echo "ZeroLink App Bundle: ${OUT%.apk}.aab"
+fi
